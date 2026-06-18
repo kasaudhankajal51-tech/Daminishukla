@@ -158,8 +158,8 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.5 } }
+              hidden: { opacity: 1 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.5 } }
             }}
             className="relative font-[var(--font-cormorant)] text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] leading-none font-light mb-6 flex justify-center"
           >
@@ -167,11 +167,10 @@ export default function Home() {
               <motion.span
                 key={i}
                 variants={{
-                  hidden: { opacity: 0, y: 50, rotateX: -90 },
-                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", stiffness: 100 } }
+                  hidden: { opacity: 0, scale: 0.8 },
+                  visible: { opacity: 1, scale: 1, transition: { duration: 0.2, ease: "easeOut" } }
                 }}
                 className="inline-block text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/20 drop-shadow-2xl"
-                style={{ transformStyle: "preserve-3d" }}
               >
                 {char}
               </motion.span>
