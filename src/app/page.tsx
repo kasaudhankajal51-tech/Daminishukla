@@ -122,6 +122,12 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen w-full bg-[#050505] font-[var(--font-space-grotesk)] text-white overflow-x-hidden selection:bg-orange-500/30">
+      {/* Premium Dark Abstract Background */}
+      <div className="fixed inset-0 pointer-events-none z-[-1]">
+        <div className="absolute inset-0 bg-cover bg-center opacity-80" style={{ backgroundImage: "url('/premium-bg.png')" }} />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#050505_90%)]" />
+      </div>
+
       {/* Cinematic Film Grain */}
       <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03]" style={{ backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png')" }} />
       
@@ -148,9 +154,29 @@ export default function Home() {
           className="relative"
         >
           <div className="absolute -inset-4 blur-3xl opacity-30 bg-gradient-to-r from-[#FF4D2E] via-purple-500 to-[#9B7FEA] animate-pulse" />
-          <h1 className="relative font-[var(--font-cormorant)] text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] leading-none font-light mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/20 drop-shadow-2xl">
-            Damini
-          </h1>
+          <motion.h1 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.5 } }
+            }}
+            className="relative font-[var(--font-cormorant)] text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] leading-none font-light mb-6 flex justify-center"
+          >
+            {"Damini".split("").map((char, i) => (
+              <motion.span
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 50, rotateX: -90 },
+                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", stiffness: 100 } }
+                }}
+                className="inline-block text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/20 drop-shadow-2xl"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </motion.h1>
         </motion.div>
 
         <motion.p 
