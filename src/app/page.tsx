@@ -4,32 +4,52 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// Modern abstract shapes instead of generic stars
-const FloatingShapes = ({ side }: { side: "creator" | "astro" }) => {
-  const isCreator = side === "creator";
-  const color1 = isCreator ? "rgba(255,107,43,0.4)" : "rgba(155,127,234,0.4)";
-  const color2 = isCreator ? "rgba(255,43,107,0.3)" : "rgba(127,155,234,0.3)";
-
+// Floating particles for creative ambiance
+const Particles = ({ color }: { color: string }) => {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden mix-blend-screen">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none mix-blend-screen opacity-40">
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            background: color,
+            width: Math.random() * 4 + 1 + "px",
+            height: Math.random() * 4 + 1 + "px",
+            left: Math.random() * 100 + "%",
+            top: Math.random() * 100 + "%",
+          }}
+          animate={{
+            y: [0, -40, 0],
+            x: [0, Math.random() * 20 - 10, 0],
+            opacity: [0, 0.8, 0],
+            scale: [1, 1.5, 1]
+          }}
+          transition={{
+            duration: Math.random() * 5 + 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: Math.random() * 5,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const FloatingShapes = () => {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden mix-blend-screen z-0">
       <motion.div
-        className="absolute top-[20%] left-[10%] w-[500px] h-[500px] rounded-full blur-[100px]"
-        style={{ background: `radial-gradient(circle, ${color1} 0%, transparent 70%)` }}
-        animate={{
-          x: [0, 50, -30, 0],
-          y: [0, -50, 40, 0],
-          scale: [1, 1.2, 0.9, 1],
-        }}
+        className="absolute top-[10%] left-[20%] w-[300px] h-[300px] md:w-[600px] md:h-[600px] rounded-full blur-[100px] md:blur-[150px]"
+        style={{ background: `radial-gradient(circle, rgba(255,107,43,0.15) 0%, transparent 70%)` }}
+        animate={{ x: [0, 50, -30, 0], y: [0, -50, 40, 0] }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] rounded-full blur-[120px]"
-        style={{ background: `radial-gradient(circle, ${color2} 0%, transparent 70%)` }}
-        animate={{
-          x: [0, -60, 40, 0],
-          y: [0, 60, -30, 0],
-          scale: [1, 1.3, 0.8, 1],
-        }}
+        className="absolute bottom-[10%] right-[20%] w-[400px] h-[400px] md:w-[700px] md:h-[700px] rounded-full blur-[100px] md:blur-[150px]"
+        style={{ background: `radial-gradient(circle, rgba(155,127,234,0.15) 0%, transparent 70%)` }}
+        animate={{ x: [0, -60, 40, 0], y: [0, 60, -30, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "linear", delay: 2 }}
       />
     </div>
@@ -37,198 +57,121 @@ const FloatingShapes = ({ side }: { side: "creator" | "astro" }) => {
 };
 
 export default function Home() {
-  const [hoveredSide, setHoveredSide] = useState<"left" | "right" | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    setMounted(true);
   }, []);
 
   return (
-    <main className="relative flex flex-col md:flex-row h-screen w-screen overflow-hidden bg-[#050505] font-[var(--font-space-grotesk)] text-white cursor-default">
+    <main className="relative min-h-screen w-full bg-[#050505] font-[var(--font-space-grotesk)] text-white overflow-x-hidden selection:bg-orange-500/30">
+      {/* Cinematic Film Grain */}
+      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.02]" style={{ backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png')" }} />
       
-      {/* Creator Side */}
-      <motion.div
-        className="relative w-full md:w-1/2 h-[50%] md:h-full overflow-hidden cursor-pointer group"
-        animate={{
-          height: isMobile ? (hoveredSide === "left" ? "65%" : hoveredSide === "right" ? "35%" : "50%") : "100%",
-          width: !isMobile ? (hoveredSide === "left" ? "65%" : hoveredSide === "right" ? "35%" : "50%") : "100%",
-          filter: hoveredSide === "right" ? "blur(8px) grayscale(60%) brightness(0.5)" : "blur(0px) grayscale(0%) brightness(1)",
-        }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        onMouseEnter={() => setHoveredSide("left")}
-        onMouseLeave={() => setHoveredSide(null)}
-        onClick={() => { if(isMobile) setHoveredSide("left") }}
-        style={{ zIndex: hoveredSide === "left" ? 10 : 1 }}
-      >
-        <div className="absolute inset-0 bg-[#0A0400]" />
-        
-        {/* Background Image with slight zoom on hover */}
-        <motion.div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/creator-bg.png')" }}
-          animate={{ scale: hoveredSide === "left" ? 1.05 : 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        />
-        
-        {/* Dark Overlays for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0400] via-[#0A0400]/70 to-transparent" />
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-700" />
+      <FloatingShapes />
 
-        <FloatingShapes side="creator" />
-        
-        <div className="absolute opacity-[0.03] pointer-events-none text-[20rem] md:text-[30rem] leading-none select-none -bottom-20 left-1/2 -translate-x-1/2 md:translate-x-0 md:-left-20 font-bold mix-blend-overlay">CR</div>
-        
-        <div className="relative z-10 h-full flex flex-col justify-center p-8 md:p-16 items-center md:items-end text-center md:text-right">
-          
-          {/* Glassmorphic Panel to Highlight Text */}
-          <motion.div 
-            className="flex flex-col items-center md:items-end bg-black/40 backdrop-blur-[16px] border border-white/10 p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-            animate={{ scale: hoveredSide === "left" ? 1.05 : 1, y: hoveredSide === "left" ? -10 : 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <div className="px-4 py-1.5 rounded-full border border-orange-500/50 bg-orange-500/20 mb-6 shadow-[0_0_15px_rgba(255,107,43,0.3)]">
-              <p className="text-[0.6rem] tracking-[0.3em] uppercase text-orange-300 font-bold">Enter her world</p>
-            </div>
-            
-            <h1 className="font-[var(--font-cormorant)] font-light text-6xl md:text-8xl leading-none text-white mb-2 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
-              Damini
-            </h1>
-            <h2 className="font-[var(--font-cormorant)] italic text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B2B] to-[#FF9A5C] mb-6 drop-shadow-lg">
-              the Creator
-            </h2>
-            
-            <p className="text-sm md:text-base tracking-[0.2em] uppercase text-white/80 mb-12 font-medium drop-shadow-md">Content Creator · Digital Influencer</p>
-            
-            <div className="flex flex-wrap justify-center md:justify-end gap-3 mb-12 max-w-md">
-              {["Reels", "Instagram", "YouTube", "Brand Collabs"].map((tag) => (
-                <span key={tag} className="text-[0.65rem] tracking-[0.15em] uppercase px-4 py-2 rounded-xl bg-black/30 border border-white/20 text-white/90 hover:border-[#FF6B2B]/70 hover:bg-[#FF6B2B]/20 hover:text-white transition-all duration-300 shadow-xl">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            
-            <Link 
-              href="/creator"
-              className="relative overflow-hidden inline-flex items-center gap-3 px-10 py-4 bg-white/10 border border-white/20 rounded-2xl font-[var(--font-space-grotesk)] text-sm font-bold tracking-[0.15em] uppercase transition-all duration-500 hover:scale-105 group/btn shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_40px_rgba(255,107,43,0.4)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FF6B2B] to-[#FF9A5C] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
-              <span className="relative z-10 text-white group-hover/btn:text-white transition-colors duration-300">Explore Portfolio</span>
-              <svg className="w-4 h-4 relative z-10 text-white group-hover/btn:text-white transition-all duration-300 group-hover/btn:translate-x-1 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </Link>
-          </motion.div>
-        </div>
-      </motion.div>
-
-      {/* Divider */}
-      <motion.div 
-        className="absolute z-20 pointer-events-none flex items-center justify-center"
-        animate={{
-          left: isMobile ? '0' : (hoveredSide === 'left' ? '65%' : hoveredSide === 'right' ? '35%' : '50%'),
-          top: isMobile ? (hoveredSide === 'left' ? '65%' : hoveredSide === 'right' ? '35%' : '50%') : '0',
-          width: isMobile ? '100%' : '2px',
-          height: isMobile ? '2px' : '100%',
-          x: isMobile ? 0 : '-50%',
-          y: isMobile ? '-50%' : 0,
-        }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-        
-        {/* Glowing Orb Center */}
+      {/* Hero Section */}
+      <section className="relative z-10 w-full pt-32 md:pt-40 pb-16 md:pb-24 flex flex-col items-center justify-center text-center px-4">
         <motion.div 
-          className="absolute flex items-center justify-center w-16 h-16 rounded-full bg-[#050505] border border-white/10 backdrop-blur-2xl shadow-[0_0_30px_rgba(0,0,0,0.8)]"
-          animate={{
-             boxShadow: hoveredSide === 'left' ? '0 0 50px rgba(255,107,43,0.5)' : hoveredSide === 'right' ? '0 0 50px rgba(155,127,234,0.5)' : '0 0 30px rgba(255,255,255,0.1)',
-             borderColor: hoveredSide === 'left' ? 'rgba(255,107,43,0.3)' : hoveredSide === 'right' ? 'rgba(155,127,234,0.3)' : 'rgba(255,255,255,0.1)'
-          }}
-          transition={{ duration: 0.4 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8 shadow-[0_0_20px_rgba(255,255,255,0.05)]"
         >
-          <div className="font-[var(--font-cormorant)] text-xl text-white/90 font-light tracking-widest drop-shadow-md">DS</div>
-          {/* Inner pulse */}
-          <motion.div 
-            className="absolute inset-0 rounded-full border border-white/20"
-            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF4D2E] to-[#9B7FEA] animate-pulse" />
+          <span className="text-[0.65rem] md:text-xs tracking-[0.2em] uppercase font-bold text-white/80">Welcome to her universe</span>
         </motion.div>
-      </motion.div>
 
-      {/* Astro Side */}
-      <motion.div
-        className="relative w-full md:w-1/2 h-[50%] md:h-full overflow-hidden cursor-pointer group"
-        animate={{
-          height: isMobile ? (hoveredSide === "right" ? "65%" : hoveredSide === "left" ? "35%" : "50%") : "100%",
-          width: !isMobile ? (hoveredSide === "right" ? "65%" : hoveredSide === "left" ? "35%" : "50%") : "100%",
-          filter: hoveredSide === "left" ? "blur(8px) grayscale(60%) brightness(0.5)" : "blur(0px) grayscale(0%) brightness(1)",
-        }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        onMouseEnter={() => setHoveredSide("right")}
-        onMouseLeave={() => setHoveredSide(null)}
-        onClick={() => { if(isMobile) setHoveredSide("right") }}
-        style={{ zIndex: hoveredSide === "right" ? 10 : 1 }}
-      >
-        <div className="absolute inset-0 bg-[#04020A]" />
-        
-        {/* Background Image with slight zoom on hover */}
-        <motion.div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/astrologer-bg.png')" }}
-          animate={{ scale: hoveredSide === "right" ? 1.05 : 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        />
-        
-        {/* Dark Overlays for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#04020A] via-[#04020A]/70 to-transparent" />
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-700" />
+        <motion.h1 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="font-[var(--font-cormorant)] text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] leading-none font-light mb-4 drop-shadow-2xl"
+        >
+          Damini
+        </motion.h1>
 
-        <FloatingShapes side="astro" />
-        
-        <div className="absolute opacity-[0.03] pointer-events-none text-[20rem] md:text-[30rem] leading-none select-none -bottom-20 left-1/2 -translate-x-1/2 md:translate-x-0 md:-right-20 font-bold mix-blend-overlay">AS</div>
-        
-        <div className="relative z-10 h-full flex flex-col justify-center p-8 md:p-16 items-center md:items-start text-center md:text-left">
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="text-sm md:text-lg lg:text-xl tracking-[0.2em] md:tracking-[0.3em] uppercase text-white/60 max-w-2xl font-medium"
+        >
+          Bridging the <span className="text-[#FF9A2E]">Creative</span> and the <span className="text-[#D4A843]">Cosmic</span>
+        </motion.p>
+      </section>
+
+      {/* Cards Section */}
+      <section className="relative z-10 w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
           
-          {/* Glassmorphic Panel to Highlight Text */}
+          {/* Creator Card */}
           <motion.div 
-            className="flex flex-col items-center md:items-start bg-black/40 backdrop-blur-[16px] border border-white/10 p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-            animate={{ scale: hoveredSide === "right" ? 1.05 : 1, y: hoveredSide === "right" ? -10 : 0 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="group relative h-[500px] md:h-[600px] lg:h-[700px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 cursor-pointer shadow-2xl transition-all duration-700 hover:-translate-y-4 hover:shadow-[0_30px_60px_rgba(255,77,46,0.3)]"
           >
-            <div className="px-4 py-1.5 rounded-full border border-purple-500/50 bg-purple-500/20 mb-6 shadow-[0_0_15px_rgba(155,127,234,0.3)]">
-              <p className="text-[0.6rem] tracking-[0.3em] uppercase text-purple-300 font-bold">Seek her wisdom</p>
+            <div className="absolute inset-0 bg-[#0A0400]" />
+            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100" style={{ backgroundImage: "url('/creator-bg.png')" }} />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-700" />
+            
+            <Particles color="#FF4D2E" />
+
+            {/* Centered Content */}
+            <div className="absolute inset-0 p-8 md:p-12 lg:p-16 flex flex-col justify-center items-center text-center">
+              <div className="px-4 py-1.5 rounded-full border border-[#FF4D2E]/50 bg-[#FF4D2E]/20 mb-6 backdrop-blur-md">
+                <p className="text-[0.6rem] tracking-[0.2em] uppercase text-[#FF9A2E] font-bold">Content Creator</p>
+              </div>
+              <h2 className="font-[var(--font-cormorant)] text-5xl md:text-6xl lg:text-7xl text-white mb-2">The Creator</h2>
+              <p className="text-sm md:text-base text-white/70 mb-8 max-w-md">Content Creator · Digital Influencer</p>
+              
+              <Link href="/creator" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/10 border border-[#FF4D2E]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.15em] uppercase transition-all duration-500 group-hover:bg-[#FF4D2E]/90 group-hover:border-[#FF4D2E] group-hover:text-white backdrop-blur-md shadow-[0_0_15px_rgba(255,77,46,0.2)]">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+                <span className="relative z-10 text-white/90 group-hover:text-white transition-colors duration-300">Explore</span>
+                <svg className="relative z-10 w-4 h-4 text-[#FF4D2E] group-hover:text-white transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </Link>
             </div>
-            
-            <h1 className="font-[var(--font-cormorant)] font-light text-6xl md:text-8xl leading-none text-white mb-2 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
-              Damini
-            </h1>
-            <h2 className="font-[var(--font-cormorant)] italic text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#9B7FEA] to-[#C4AEFF] mb-6 drop-shadow-lg">
-              the Astrologer
-            </h2>
-            
-            <p className="text-sm md:text-base tracking-[0.2em] uppercase text-white/80 mb-12 font-medium drop-shadow-md">Vedic Astrologer · Astro Teacher</p>
-            
-            <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-12 max-w-md">
-              {["Vedic Astrology", "Astrotalk", "Consultations", "Courses"].map((tag) => (
-                <span key={tag} className="text-[0.65rem] tracking-[0.15em] uppercase px-4 py-2 rounded-xl bg-black/30 border border-white/20 text-white/90 hover:border-[#9B7FEA]/70 hover:bg-[#9B7FEA]/20 hover:text-white transition-all duration-300 shadow-xl">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            
-            <Link 
-              href="/astro"
-              className="relative overflow-hidden inline-flex items-center gap-3 px-10 py-4 bg-white/10 border border-white/20 rounded-2xl font-[var(--font-space-grotesk)] text-sm font-bold tracking-[0.15em] uppercase transition-all duration-500 hover:scale-105 group/btn shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_40px_rgba(155,127,234,0.4)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#9B7FEA] to-[#C4AEFF] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
-              <span className="relative z-10 text-white group-hover/btn:text-white transition-colors duration-300">Discover Stars</span>
-              <svg className="w-4 h-4 relative z-10 text-white group-hover/btn:text-white transition-all duration-300 group-hover/btn:translate-x-1 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </Link>
           </motion.div>
+
+          {/* Astrologer Card */}
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="group relative h-[500px] md:h-[600px] lg:h-[700px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 cursor-pointer shadow-2xl transition-all duration-700 hover:-translate-y-4 hover:shadow-[0_30px_60px_rgba(155,127,234,0.3)] mt-8 md:mt-24"
+          >
+            <div className="absolute inset-0 bg-[#04020A]" />
+            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100" style={{ backgroundImage: "url('/astrologer-bg.png')" }} />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-700" />
+            
+            <Particles color="#9B7FEA" />
+
+            {/* Centered Content */}
+            <div className="absolute inset-0 p-8 md:p-12 lg:p-16 flex flex-col justify-center items-center text-center">
+              <div className="px-4 py-1.5 rounded-full border border-[#9B7FEA]/50 bg-[#9B7FEA]/20 mb-6 backdrop-blur-md">
+                <p className="text-[0.6rem] tracking-[0.2em] uppercase text-[#D4A843] font-bold">Vedic Astrologer</p>
+              </div>
+              <h2 className="font-[var(--font-cormorant)] text-5xl md:text-6xl lg:text-7xl text-white mb-2">The Astrologer</h2>
+              <p className="text-sm md:text-base text-white/70 mb-8 max-w-md">Vedic Astrologer · Astro Teacher</p>
+              
+              <Link href="/astro" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/10 border border-[#9B7FEA]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.15em] uppercase transition-all duration-500 group-hover:bg-[#9B7FEA]/90 group-hover:border-[#9B7FEA] group-hover:text-white backdrop-blur-md shadow-[0_0_15px_rgba(155,127,234,0.2)]">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+                <span className="relative z-10 text-white/90 group-hover:text-white transition-colors duration-300">Explore</span>
+                <svg className="relative z-10 w-4 h-4 text-[#9B7FEA] group-hover:text-white transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </Link>
+            </div>
+          </motion.div>
+
         </div>
-      </motion.div>
+      </section>
+
     </main>
   );
 }
