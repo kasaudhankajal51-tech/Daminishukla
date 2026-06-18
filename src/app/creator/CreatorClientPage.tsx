@@ -37,10 +37,10 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-inter selection:bg-sky-200 selection:text-sky-900 pb-20">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-sky-200 selection:text-sky-900 pb-20">
       
       {/* Hero Section */}
-      <section className="relative h-[80vh] w-full flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[80vh] py-24 w-full flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${bannerUrl}')` }}
@@ -51,7 +51,7 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm break-words"
           >
             Damini Shukla
           </motion.h1>
@@ -76,7 +76,7 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="flex flex-wrap gap-4 justify-center"
+            className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center w-full px-4"
           >
             <a href="https://instagram.com/daminishukla" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md hover:shadow-lg backdrop-blur-md transition-all border border-slate-200">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#E1306C]"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
@@ -99,17 +99,17 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
 
       {/* Stats Strip */}
       <section className="relative z-20 -mt-10 max-w-5xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white/90 rounded-2xl p-8 border border-slate-100 shadow-xl backdrop-blur-xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white/90 rounded-2xl p-4 sm:p-8 border border-slate-100 shadow-xl backdrop-blur-xl">
           <div className="text-center p-4">
-            <h3 className="text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">2M+</h3>
+            <h3 className="text-3xl sm:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">2M+</h3>
             <p className="text-slate-500 mt-2 font-medium">Combined Followers</p>
           </div>
           <div className="text-center p-4 md:border-x border-slate-100">
-            <h3 className="text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">150+</h3>
+            <h3 className="text-3xl sm:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">150+</h3>
             <p className="text-slate-500 mt-2 font-medium">Brand Collaborations</p>
           </div>
           <div className="text-center p-4">
-            <h3 className="text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">12+</h3>
+            <h3 className="text-3xl sm:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">12+</h3>
             <p className="text-slate-500 mt-2 font-medium">TV Appearances</p>
           </div>
         </div>

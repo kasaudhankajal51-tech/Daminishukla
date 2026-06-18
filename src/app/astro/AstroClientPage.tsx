@@ -7,10 +7,10 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
   const dsAstrologyUrl = "https://dsastrology.com";
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-inter selection:bg-indigo-200 selection:text-indigo-900 pb-20">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-indigo-200 selection:text-indigo-900 pb-20">
       
       {/* Hero Section */}
-      <section className="relative h-[80vh] w-full flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[80vh] py-24 w-full flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${bannerUrl}')` }}
@@ -45,7 +45,7 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm break-words"
           >
             Damini Shukla
           </motion.h1>
@@ -70,7 +70,7 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center w-full px-4"
           >
             <a 
               href={dsAstrologyUrl} 
@@ -95,15 +95,15 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
 
       {/* Career Milestone Dials / Stats */}
       <section className="relative z-20 -mt-10 max-w-5xl mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/90 rounded-2xl p-6 md:p-8 border border-slate-100 shadow-xl backdrop-blur-xl">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 bg-white/90 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-100 shadow-xl backdrop-blur-xl">
           {[
             { metric: "1000+", label: "Readings" },
             { metric: "5+ Yrs", label: "Experience" },
             { metric: "500+", label: "Students" },
             { metric: "Top", label: "Platforms" }
           ].map((stat, i) => (
-            <a key={i} href={dsAstrologyUrl} target="_blank" rel="noopener noreferrer" className="block text-center p-4 hover:bg-slate-50 rounded-xl transition-colors cursor-pointer group">
-              <h3 className="text-3xl md:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500 group-hover:scale-110 transition-transform">{stat.metric}</h3>
+            <a key={i} href={dsAstrologyUrl} target="_blank" rel="noopener noreferrer" className="block text-center p-2 sm:p-4 hover:bg-slate-50 rounded-xl transition-colors cursor-pointer group">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500 group-hover:scale-110 transition-transform">{stat.metric}</h3>
               <p className="text-slate-500 mt-2 font-medium text-sm md:text-base">{stat.label}</p>
             </a>
           ))}

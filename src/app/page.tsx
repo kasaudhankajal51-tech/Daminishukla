@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 const Particles = ({ color }: { color: string }) => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none mix-blend-screen opacity-50 z-0">
-      {[...Array(20)].map((_, i) => (
+      {[...Array(12)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full"
@@ -40,6 +40,14 @@ const Particles = ({ color }: { color: string }) => {
 
 // 3D Tilt Card Component for massive wow factor
 function TiltCard({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -50,6 +58,7 @@ function TiltCard({ children, className, delay = 0 }: { children: React.ReactNod
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -161,7 +170,7 @@ export default function Home() {
               hidden: { opacity: 1 },
               visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.5 } }
             }}
-            className="relative font-[var(--font-cormorant)] text-7xl sm:text-8xl md:text-[10rem] lg:text-[12rem] leading-none font-light mb-6 flex justify-center"
+            className="relative font-[var(--font-cormorant)] text-6xl sm:text-7xl md:text-[9rem] lg:text-[11rem] xl:text-[12rem] leading-none font-light mb-6 flex justify-center"
           >
             {"Damini".split("").map((char, i) => (
               <motion.span
@@ -195,7 +204,7 @@ export default function Home() {
           {/* Creator Tilt Card */}
           <TiltCard 
             delay={0.2}
-            className="group relative h-[500px] md:h-[600px] lg:h-[700px] w-full cursor-pointer z-10 hover:z-50"
+            className="group relative h-[420px] sm:h-[500px] md:h-[600px] lg:h-[700px] w-full cursor-pointer z-10 hover:z-50"
           >
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(255,77,46,0.4)] group-hover:border-[#FF4D2E]/50">
               <div className="absolute inset-0 bg-[#0A0400]" />
@@ -213,7 +222,7 @@ export default function Home() {
                 <div className="px-5 py-2 rounded-full border border-[#FF4D2E]/50 bg-[#FF4D2E]/20 mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(255,77,46,0.2)]">
                   <p className="text-[0.6rem] tracking-[0.25em] uppercase text-[#FF9A2E] font-bold">Content Creator</p>
                 </div>
-                <h2 className="font-[var(--font-cormorant)] text-5xl md:text-6xl lg:text-7xl text-white mb-2 drop-shadow-xl">The Creator</h2>
+                <h2 className="font-[var(--font-cormorant)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-2 drop-shadow-xl">The Creator</h2>
                 <p className="text-sm md:text-base text-white/70 mb-10 max-w-md drop-shadow-md">Content Creator · Digital Influencer</p>
                 
                 <Link href="/creator" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-[#FF4D2E]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 group-hover:bg-[#FF4D2E] group-hover:border-[#FF4D2E] group-hover:text-white backdrop-blur-xl shadow-[0_0_20px_rgba(255,77,46,0.3)]">
@@ -228,7 +237,7 @@ export default function Home() {
           {/* Astrologer Tilt Card */}
           <TiltCard 
             delay={0.4}
-            className="group relative h-[500px] md:h-[600px] lg:h-[700px] w-full cursor-pointer mt-8 md:mt-24 z-10 hover:z-50"
+            className="group relative h-[420px] sm:h-[500px] md:h-[600px] lg:h-[700px] w-full cursor-pointer mt-6 md:mt-24 z-10 hover:z-50"
           >
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(155,127,234,0.4)] group-hover:border-[#9B7FEA]/50">
               <div className="absolute inset-0 bg-[#04020A]" />
@@ -246,7 +255,7 @@ export default function Home() {
                 <div className="px-5 py-2 rounded-full border border-[#9B7FEA]/50 bg-[#9B7FEA]/20 mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(155,127,234,0.2)]">
                   <p className="text-[0.6rem] tracking-[0.25em] uppercase text-[#D4A843] font-bold">Vedic Astrologer</p>
                 </div>
-                <h2 className="font-[var(--font-cormorant)] text-5xl md:text-6xl lg:text-7xl text-white mb-2 drop-shadow-xl">The Astrologer</h2>
+                <h2 className="font-[var(--font-cormorant)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-2 drop-shadow-xl">The Astrologer</h2>
                 <p className="text-sm md:text-base text-white/70 mb-10 max-w-md drop-shadow-md">Vedic Astrologer · Astro Teacher</p>
                 
                 <Link href="/astro" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-[#9B7FEA]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 group-hover:bg-[#9B7FEA] group-hover:border-[#9B7FEA] group-hover:text-white backdrop-blur-xl shadow-[0_0_20px_rgba(155,127,234,0.3)]">
