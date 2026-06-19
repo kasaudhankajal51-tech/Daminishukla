@@ -6,6 +6,14 @@ import { useState, useEffect } from "react";
 
 // Floating particles for creative ambiance
 const Particles = ({ color }: { color: string }) => {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none mix-blend-screen opacity-50 z-0">
       {[...Array(12)].map((_, i) => (

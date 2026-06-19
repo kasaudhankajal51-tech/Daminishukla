@@ -2,9 +2,15 @@
 
 import { motion } from "framer-motion";
 import { Moon, Star, Sun, Compass, BookOpen, Heart, Briefcase, GraduationCap, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
   const dsAstrologyUrl = "https://dsastrology.com";
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-indigo-200 selection:text-indigo-900 pb-20">
@@ -18,28 +24,30 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-white/80 to-white/40 backdrop-blur-[2px]" />
         
         {/* Floating Zodiac Glyphs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: "100vh", x: Math.random() * 100 + "vw" }}
-              animate={{ 
-                opacity: [0, 0.4, 0], 
-                y: "-20vh",
-                rotate: 360
-              }}
-              transition={{ 
-                duration: 15 + Math.random() * 10, 
-                repeat: Infinity, 
-                delay: i * 2,
-                ease: "linear"
-              }}
-              className="absolute text-indigo-400 text-4xl opacity-30 drop-shadow-md"
-            >
-              {['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'][Math.floor(Math.random() * 12)]}
-            </motion.div>
-          ))}
-        </div>
+        {mounted && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: "100vh", x: Math.random() * 100 + "vw" }}
+                animate={{ 
+                  opacity: [0, 0.4, 0], 
+                  y: "-20vh",
+                  rotate: 360
+                }}
+                transition={{ 
+                  duration: 15 + Math.random() * 10, 
+                  repeat: Infinity, 
+                  delay: i * 2,
+                  ease: "linear"
+                }}
+                className="absolute text-indigo-400 text-4xl opacity-30 drop-shadow-md"
+              >
+                {['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'][Math.floor(Math.random() * 12)]}
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl mx-auto">
           <motion.h1 
