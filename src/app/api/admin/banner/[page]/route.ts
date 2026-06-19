@@ -3,6 +3,7 @@ import { getSession } from "@/lib/session";
 import { getDb } from "@/lib/mongodb";
 import fs from "fs";
 import path from "path";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request, { params }: { params: Promise<{ page: string }> }) {
   const session = await getSession();
@@ -46,6 +47,10 @@ export async function POST(req: Request, { params }: { params: Promise<{ page: s
       { $set: { page, image_url: imageUrl, updated_at: new Date() } },
       { upsert: true }
     );
+
+    // Force Next.js to revalidate the frontend cache for production
+    revalidatePath(`/${page}`);
+    revalidatePath("/");
 
     return NextResponse.json({ success: true, url: imageUrl });
   } catch (error) {
