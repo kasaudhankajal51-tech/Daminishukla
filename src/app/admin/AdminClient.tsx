@@ -136,6 +136,8 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
   const [previewUrls, setPreviewUrls] = useState<Record<string, string>>({});
   const [isExporting, setIsExporting] = useState(false);
+  const [enquiries, setEnquiries] = useState<any[]>([]);
+  const [isLoadingEnquiries, setIsLoadingEnquiries] = useState(false);
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -156,6 +158,25 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     };
     fetchBanners();
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "export") {
+      const fetchEnquiries = async () => {
+        setIsLoadingEnquiries(true);
+        try {
+          const res = await fetch("/api/admin/queries/list");
+          const data = await res.json();
+          if (data.success) {
+            setEnquiries(data.data);
+          }
+        } catch (err) {
+          console.error("Failed to fetch enquiries");
+        }
+        setIsLoadingEnquiries(false);
+      };
+      fetchEnquiries();
+    }
+  }, [activeTab]);
 
   const handleUpload = async (page: string) => {
     const file = selectedFiles[page];
@@ -374,6 +395,57 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
                     {isExporting ? <span className="animate-pulse">Exporting...</span> : <><Download size={18} /> Export XLS</>}
                   </button>
                 </div>
+              </section>
+
+              {/* Enquiries Table Section */}
+              <section className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mt-8">
+                <h3 className="text-xl font-bold font-outfit text-slate-900 mb-6">Recent Enquiries</h3>
+                
+                {isLoadingEnquiries ? (
+                  <div className="flex justify-center items-center py-12">
+                    <span className="animate-pulse text-slate-400 font-medium">Loading enquiries...</span>
+                  </div>
+                ) : enquiries.length === 0 ? (
+                  <div className="text-center py-12 bg-slate-50 rounded-2xl border border-slate-100">
+                    <p className="text-slate-500 font-medium">No enquiries found yet.</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-sm">
+                          <th className="p-4 whitespace-nowrap">Date</th>
+                          <th className="p-4 whitespace-nowrap">Name</th>
+                          <th className="p-4 whitespace-nowrap">Contact</th>
+                          <th className="p-4 whitespace-nowrap">Type</th>
+                          <th className="p-4 min-w-[300px]">Message</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 text-sm">
+                        {enquiries.map((enq, i) => (
+                          <tr key={enq._id || i} className="hover:bg-slate-50 transition-colors">
+                            <td className="p-4 whitespace-nowrap text-slate-500">
+                              {new Date(enq.created_at || new Date()).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                            </td>
+                            <td className="p-4 font-medium text-slate-800 whitespace-nowrap">{enq.full_name || enq.name || '-'}</td>
+                            <td className="p-4 text-slate-600 whitespace-nowrap">
+                              <div>{enq.email || '-'}</div>
+                              {enq.phone && <div className="text-xs text-slate-400 mt-0.5">{enq.phone}</div>}
+                            </td>
+                            <td className="p-4">
+                              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-100 whitespace-nowrap">
+                                {enq.enquiry_type || enq.enquiryType || 'General'}
+                              </span>
+                            </td>
+                            <td className="p-4 text-slate-600 leading-relaxed max-w-md truncate hover:whitespace-normal hover:break-words">
+                              {enq.message || '-'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </section>
             </div>
           )}
