@@ -164,11 +164,13 @@ export default function Home() {
                 <h2 className="font-[var(--font-cormorant)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-2 drop-shadow-xl">The Creator</h2>
                 <p className="text-sm md:text-base text-white/70 mb-10 max-w-md drop-shadow-md">Content Creator · Digital Influencer</p>
 
-                <Link href="/creator" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-[#FF4D2E]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 group-hover:bg-[#FF4D2E] group-hover:border-[#FF4D2E] group-hover:text-white backdrop-blur-xl shadow-[0_0_20px_rgba(255,77,46,0.3)]">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
-                  <span className="relative z-10 text-white group-hover:text-white transition-colors duration-300">Explore</span>
-                  <svg className="relative z-10 w-4 h-4 text-[#FF4D2E] group-hover:text-white transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                </Link>
+                <motion.div whileTap={{ scale: 0.9 }}>
+                  <Link href="/creator" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-[#FF4D2E]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#FF4D2E] hover:border-[#FF4D2E] hover:text-white active:bg-[#FF4D2E] active:border-[#FF4D2E] active:text-white backdrop-blur-xl shadow-[0_0_20px_rgba(255,77,46,0.3)] group/btn">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] group-hover/btn:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+                    <span className="relative z-10 text-white">Explore</span>
+                    <svg className="relative z-10 w-4 h-4 text-[#FF4D2E] group-hover/btn:text-white group-active/btn:text-white transition-all duration-300 group-hover/btn:translate-x-1 group-active/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </TiltCard>
@@ -194,11 +196,13 @@ export default function Home() {
                 <h2 className="font-[var(--font-cormorant)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-2 drop-shadow-xl">The Astrologer</h2>
                 <p className="text-sm md:text-base text-white/70 mb-10 max-w-md drop-shadow-md">Vedic Astrologer · Astro Teacher</p>
 
-                <Link href="/astro" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-[#9B7FEA]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 group-hover:bg-[#9B7FEA] group-hover:border-[#9B7FEA] group-hover:text-white backdrop-blur-xl shadow-[0_0_20px_rgba(155,127,234,0.3)]">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
-                  <span className="relative z-10 text-white group-hover:text-white transition-colors duration-300">Explore</span>
-                  <svg className="relative z-10 w-4 h-4 text-[#9B7FEA] group-hover:text-white transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                </Link>
+                <motion.div whileTap={{ scale: 0.9 }}>
+                  <Link href="/astro" className="relative overflow-hidden inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-[#9B7FEA]/40 rounded-full font-[var(--font-space-grotesk)] text-xs md:text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#9B7FEA] hover:border-[#9B7FEA] hover:text-white active:bg-[#9B7FEA] active:border-[#9B7FEA] active:text-white backdrop-blur-xl shadow-[0_0_20px_rgba(155,127,234,0.3)] group/btn">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] group-hover/btn:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+                    <span className="relative z-10 text-white">Explore</span>
+                    <svg className="relative z-10 w-4 h-4 text-[#9B7FEA] group-hover/btn:text-white group-active/btn:text-white transition-all duration-300 group-hover/btn:translate-x-1 group-active/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </TiltCard>
