@@ -182,56 +182,59 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
       </section>
 
       {/* Social Platform Cards */}
-      <section className="max-w-6xl mx-auto px-4 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-4 text-slate-900">Connect & Explore</h2>
-          <p className="text-slate-600 mt-4 text-lg">Join the community across platforms</p>
-          <div className="w-24 h-1 bg-gradient-to-r from-sky-400 to-cyan-300 mx-auto rounded-full mt-6" />
+      <section className="max-w-5xl mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold font-outfit mb-3 text-slate-900">Connect & Explore</h2>
+          <p className="text-slate-600 mt-2 text-base">Join the community across platforms</p>
+          <div className="w-20 h-1 bg-gradient-to-r from-sky-400 to-cyan-300 mx-auto rounded-full mt-5" />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {/* Instagram Card */}
-          <a href="https://instagram.com/daminishukla" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 p-[2px] rounded-3xl group hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer">
-            <div className="bg-white h-full rounded-[22px] p-8 flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <a href="https://instagram.com/daminishukla" target="_blank" rel="noopener noreferrer" className="relative cursor-pointer">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-[24px] blur-md opacity-20" />
+            <div className="relative bg-white h-full rounded-[24px] p-8 flex flex-col items-center text-center border border-pink-100 shadow-xl shadow-pink-500/5">
+              <div className="w-16 h-16 rounded-[18px] bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white mb-5 shadow-lg shadow-pink-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
               </div>
-              <h3 className="text-2xl font-bold font-outfit mb-2 text-slate-900">Instagram</h3>
-              <p className="text-slate-500 mb-6 font-medium">@daminishukla</p>
-              <p className="text-slate-600 mb-8 leading-relaxed">Daily lifestyle updates, fashion inspiration, and behind-the-scenes magic.</p>
-              <div className="mt-auto px-6 py-2.5 rounded-full bg-pink-50 text-pink-600 font-semibold group-hover:bg-pink-100 transition-colors">
-                Follow on Instagram
+              <h3 className="text-2xl font-bold font-outfit mb-1 text-slate-900">Instagram</h3>
+              <p className="text-pink-500 font-semibold mb-4">@daminishukla</p>
+              <p className="text-slate-500 text-sm mb-8 leading-relaxed">Daily lifestyle updates, fashion inspiration, and behind-the-scenes magic.</p>
+              <div className="mt-auto px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-bold shadow-md shadow-pink-500/20 w-full">
+                Follow me
               </div>
             </div>
           </a>
 
           {/* YouTube Card */}
-          <a href="https://youtube.com/@daminishukla" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-red-500 to-red-600 p-[2px] rounded-3xl group hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer">
-            <div className="bg-white h-full rounded-[22px] p-8 flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-red-600 mb-6 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+          <a href="https://youtube.com/@daminishukla" target="_blank" rel="noopener noreferrer" className="relative cursor-pointer">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-red-600 rounded-[24px] blur-md opacity-20" />
+            <div className="relative bg-white h-full rounded-[24px] p-8 flex flex-col items-center text-center border border-red-100 shadow-xl shadow-red-500/5">
+              <div className="w-16 h-16 rounded-[18px] bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center text-white mb-5 shadow-lg shadow-red-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
               </div>
-              <h3 className="text-2xl font-bold font-outfit mb-2 text-slate-900">YouTube</h3>
-              <p className="text-slate-500 mb-6 font-medium">Damini Shukla</p>
-              <p className="text-slate-600 mb-8 leading-relaxed">In-depth vlogs, product reviews, and exclusive lifestyle content.</p>
-              <div className="mt-auto px-6 py-2.5 rounded-full bg-red-50 text-red-600 font-semibold group-hover:bg-red-100 transition-colors">
-                Subscribe Channel
+              <h3 className="text-2xl font-bold font-outfit mb-1 text-slate-900">YouTube</h3>
+              <p className="text-red-500 font-semibold mb-4">Damini Shukla</p>
+              <p className="text-slate-500 text-sm mb-8 leading-relaxed">In-depth vlogs, product reviews, and exclusive lifestyle content.</p>
+              <div className="mt-auto px-6 py-3 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white font-bold shadow-md shadow-red-500/20 w-full">
+                Subscribe
               </div>
             </div>
           </a>
 
           {/* Live Feed Placeholder */}
-          <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl p-8 flex flex-col items-center justify-center text-center group hover:border-sky-300 transition-colors">
-            <div className="w-16 h-16 rounded-full bg-slate-200 flex items-center justify-center text-slate-400 mb-6 group-hover:text-sky-500 group-hover:bg-sky-50 transition-all">
-              <Sparkles size={32} />
-            </div>
-            <h3 className="text-xl font-bold font-outfit mb-4 text-slate-700">Live Social Feed</h3>
-            <p className="text-slate-500 text-sm leading-relaxed mb-6">
-              (Meta / YouTube API Integration Optional)<br />
-              This space is reserved for a dynamic live feed of the latest posts or videos.
-            </p>
-            <div className="px-5 py-2 rounded-lg bg-slate-200 text-slate-600 text-sm font-medium">
-              Coming Soon
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-cyan-400 rounded-[24px] blur-md opacity-20" />
+            <div className="relative bg-white h-full rounded-[24px] p-8 flex flex-col items-center text-center border border-sky-100 shadow-xl shadow-sky-500/5">
+              <div className="w-16 h-16 rounded-[18px] bg-gradient-to-br from-sky-400 to-cyan-400 flex items-center justify-center text-white mb-5 shadow-lg shadow-sky-500/30">
+                <Sparkles size={28} />
+              </div>
+              <h3 className="text-2xl font-bold font-outfit mb-1 text-slate-900">Live Social Feed</h3>
+              <p className="text-sky-500 font-semibold mb-4">Coming Soon</p>
+              <p className="text-slate-500 text-sm mb-8 leading-relaxed">Space reserved for a dynamic live feed of the latest posts and updates.</p>
+              <div className="mt-auto px-6 py-3 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 text-white font-bold shadow-md shadow-sky-500/20 w-full">
+                Stay Tuned
+              </div>
             </div>
           </div>
         </div>
