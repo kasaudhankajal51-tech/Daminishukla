@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
+import Image from "next/image";
 import { Download, Upload, LogOut, Settings, Image as ImageIcon } from "lucide-react";
 
 export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean }) {
@@ -127,7 +128,7 @@ export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean 
   return <AdminDashboard onLogout={handleLogout} />;
 }
 
-function AdminDashboard({ onLogout }: { onLogout: () => void }) {
+const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
   const [activeTab, setActiveTab] = useState<"banners" | "export">("banners");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
@@ -178,7 +179,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     }
   }, [activeTab]);
 
-  const handleUpload = async (page: string) => {
+  const handleUpload = useCallback(async (page: string) => {
     const file = selectedFiles[page];
     if (!file) return;
 
@@ -203,9 +204,9 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     } catch {
       setUploadStatus(prev => ({ ...prev, [page]: "Failed." }));
     }
-  };
+  }, [selectedFiles]);
 
-  const handleExport = () => {
+  const handleExport = useCallback(() => {
     setIsExporting(true);
     let url = "/api/admin/queries/export";
     const params = new URLSearchParams();
@@ -214,7 +215,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     if (params.toString()) url += `?${params.toString()}`;
     window.location.href = url;
     setTimeout(() => setIsExporting(false), 2000);
-  };
+  }, [dateFrom, dateTo]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-inter flex flex-col md:flex-row">
@@ -283,7 +284,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
                     <p className="text-sm text-slate-500 font-medium">Upload a bright, light-themed background image for the Creator page hero section.</p>
 
                     <div className="w-full h-64 bg-slate-200 rounded-xl overflow-hidden relative border border-slate-300 my-2 flex items-center justify-center p-2">
-                      <img src={previewUrls["creator"] || banners.creator} alt="Creator Banner Preview" className="max-w-full max-h-full object-contain rounded" />
+                      <Image src={previewUrls["creator"] || banners.creator} alt="Creator Banner Preview" fill className="object-contain rounded" />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                         <span className="bg-white/90 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1"><ImageIcon size={14} /> {previewUrls["creator"] ? "New Preview" : "Current Preview"}</span>
                       </div>
@@ -320,7 +321,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
                     <p className="text-sm text-slate-500 font-medium">Upload a mystical, light-themed background image for the Astrologer page hero section.</p>
 
                     <div className="w-full h-64 bg-slate-200 rounded-xl overflow-hidden relative border border-slate-300 my-2 flex items-center justify-center p-2">
-                      <img src={previewUrls["astrologer"] || banners.astrologer} alt="Astrologer Banner Preview" className="max-w-full max-h-full object-contain rounded" />
+                      <Image src={previewUrls["astrologer"] || banners.astrologer} alt="Astrologer Banner Preview" fill className="object-contain rounded" />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                         <span className="bg-white/90 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1"><ImageIcon size={14} /> {previewUrls["astrologer"] ? "New Preview" : "Current Preview"}</span>
                       </div>
@@ -452,4 +453,5 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       </main>
     </div>
   );
-}
+});
+AdminDashboard.displayName = "AdminDashboard";

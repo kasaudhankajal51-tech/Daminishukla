@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Moon, Star, Sun, Compass, BookOpen, Heart, Briefcase, GraduationCap, ArrowRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, memo, useMemo } from "react";
 
-export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
+export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
   const dsAstrologyUrl = "https://dsastrology.com";
   const [mounted, setMounted] = useState(false);
 
@@ -43,7 +43,7 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
                 }}
                 className="absolute text-indigo-400 text-4xl opacity-30 drop-shadow-md"
               >
-                {['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'][Math.floor(Math.random() * 12)]}
+                {useMemo(() => ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'], [])[Math.floor(Math.random() * 12)]}
               </motion.div>
             ))}
           </div>
@@ -104,12 +104,12 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
       {/* Career Milestone Dials / Stats */}
       <section className="relative z-20 -mt-10 max-w-5xl mx-auto px-4">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 bg-white/90 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-100 shadow-xl backdrop-blur-xl">
-          {[
+          {useMemo(() => [
             { metric: "1000+", label: "Readings" },
             { metric: "5+ Yrs", label: "Experience" },
             { metric: "500+", label: "Students" },
             { metric: "Top", label: "Platforms" }
-          ].map((stat, i) => (
+          ], []).map((stat, i) => (
             <a key={i} href={dsAstrologyUrl} target="_blank" rel="noopener noreferrer" className="block text-center p-2 sm:p-4 hover:bg-slate-50 rounded-xl transition-colors cursor-pointer group">
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500 group-hover:scale-110 transition-transform">{stat.metric}</h3>
               <p className="text-slate-500 mt-2 font-medium text-sm md:text-base">{stat.label}</p>
@@ -126,12 +126,12 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
+          {useMemo(() => [
             { icon: <Briefcase size={28} />, title: "Career Clarity", desc: "Discover your professional calling and the best timing for career transitions." },
             { icon: <Heart size={28} />, title: "Relationship Guidance", desc: "Understand your compatibility and navigate relationship dynamics." },
             { icon: <Compass size={28} />, title: "Life Purpose", desc: "Uncover your karmic path and align with your soul's true journey." },
             { icon: <Sun size={28} />, title: "Business Timing", desc: "Launch projects and make investments when the stars favor success." }
-          ].map((item, i) => (
+          ], []).map((item, i) => (
             <a 
               key={i}
               href={dsAstrologyUrl}
@@ -162,12 +162,12 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
+            {useMemo(() => [
               { title: "Birth Chart Reading", price: "Personalized", icon: <Moon size={24} />, desc: "A comprehensive deep dive into your Kundali covering all major aspects of life." },
               { title: "Predictive Astrology", price: "Future Insight", icon: <Star size={24} />, desc: "Detailed forecasting using Dasha systems and transits to prepare you for what's ahead." },
               { title: "Kundali Milan", price: "Compatibility", icon: <Heart size={24} />, desc: "In-depth matching for marriage and partnerships based on ancient Ashta Koota principles." },
               { title: "Astro Courses", price: "Learn Astrology", icon: <BookOpen size={24} />, desc: "Join 500+ students in mastering the science of Jyotish from basics to advanced." }
-            ].map((service, i) => (
+            ], []).map((service, i) => (
               <a 
                 key={i}
                 href={dsAstrologyUrl}
@@ -199,13 +199,13 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
         <div className="max-w-6xl mx-auto px-4">
           <p className="text-center text-sm font-semibold tracking-widest text-slate-400 uppercase mb-8">Trusted & Verified By</p>
           <div className="flex flex-wrap justify-center gap-6 md:gap-12">
-            {[
+            {useMemo(() => [
               "Astrotalk (Verified)", 
               "Corporate Workshops", 
               "Certified Educator", 
               "Media & TV", 
               "1000+ Consultations"
-            ].map((cred, i) => (
+            ], []).map((cred, i) => (
               <a 
                 key={i} 
                 href={dsAstrologyUrl}
@@ -238,4 +238,4 @@ export function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
 
     </div>
   );
-}
+});

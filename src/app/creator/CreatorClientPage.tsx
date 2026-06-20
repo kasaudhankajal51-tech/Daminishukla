@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Mail, Award, Users, Tv, Star, TrendingUp, Sparkles, Video } from "lucide-react";
-import { useState } from "react";
+import React, { useState, useCallback, useMemo, memo } from "react";
+import Image from "next/image";
 
-export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
+export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -15,7 +16,7 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
@@ -34,7 +35,7 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
       setSubmitStatus("error");
     }
     setIsSubmitting(false);
-  };
+  }, [formData]);
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-sky-200 selection:text-sky-900 pb-20">
@@ -123,14 +124,14 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
+          {useMemo(() => [
             { icon: <Tv size={24} />, title: "TV Show Feature", desc: "Featured in prime time reality shows and talk shows across national television." },
             { icon: <Star size={24} />, title: "Brand Partnerships", desc: "Collaborated with Fortune 500 beauty, lifestyle, and tech brands." },
             { icon: <TrendingUp size={24} />, title: "Viral Reels", desc: "Consistently hitting millions of views with relatable and trending content." },
             { icon: <Users size={24} />, title: "Community Builder", desc: "Fostered a highly engaged community of 2M+ loyal supporters." },
             { icon: <Award size={24} />, title: "Industry Recognition", desc: "Awarded 'Creator of the Year' at leading digital influencer awards." },
             { icon: <Sparkles size={24} />, title: "Events & Appearances", desc: "Keynote speaker and special guest at major lifestyle and tech events." },
-          ].map((item, i) => (
+          ], []).map((item, i) => (
             <motion.div 
               key={i}
               whileHover={{ y: -5 }}
@@ -171,7 +172,7 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
                     <Video size={32} />
                   </div>
                 </div>
-                <img src="/creator-bg.png" alt="TV Feature" className="w-full h-full object-cover" />
+                <Image src="/creator-bg.png" fill alt="TV Feature" className="object-cover" />
               </div>
             </div>
           </div>
@@ -343,4 +344,4 @@ export function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
 
     </div>
   );
-}
+});

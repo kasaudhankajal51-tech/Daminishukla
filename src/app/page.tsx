@@ -2,10 +2,11 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import React, { useState, useEffect, memo } from "react";
 
 // Floating particles for creative ambiance
-const Particles = ({ color }: { color: string }) => {
+const Particles = memo(({ color }: { color: string }) => {
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
@@ -44,10 +45,11 @@ const Particles = ({ color }: { color: string }) => {
       ))}
     </div>
   );
-};
+});
+Particles.displayName = "Particles";
 
 // 3D Tilt Card Component for massive wow factor
-function TiltCard({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
+const TiltCard = memo(({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -108,9 +110,10 @@ function TiltCard({ children, className, delay = 0 }: { children: React.ReactNod
       </div>
     </motion.div>
   );
-}
+});
+TiltCard.displayName = "TiltCard";
 
-const FloatingShapes = () => {
+const FloatingShapes = memo(() => {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden mix-blend-screen z-0">
       {/* Added more complex background shapes and animations */}
@@ -128,7 +131,8 @@ const FloatingShapes = () => {
       />
     </div>
   );
-};
+});
+FloatingShapes.displayName = "FloatingShapes";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -141,7 +145,7 @@ export default function Home() {
     <main className="relative min-h-screen w-full bg-[#050505] font-[var(--font-space-grotesk)] text-white overflow-x-hidden selection:bg-orange-500/30">
       {/* Premium Dark Abstract Background */}
       <div className="fixed inset-0 pointer-events-none z-[-1]">
-        <div className="absolute inset-0 bg-cover bg-center opacity-80" style={{ backgroundImage: "url('/premium-bg.png')" }} />
+        <Image src="/premium-bg.png" fill alt="Background" priority quality={80} className="object-cover object-center opacity-80" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#050505_90%)]" />
       </div>
 
@@ -216,7 +220,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(255,77,46,0.4)] group-hover:border-[#FF4D2E]/50">
               <div className="absolute inset-0 bg-[#0A0400]" />
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" style={{ backgroundImage: "url('/creator-bg.png')" }} />
+              <Image src="/creator-bg.png" fill alt="Creator Background" className="object-cover object-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-700" />
               
@@ -249,7 +253,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(155,127,234,0.4)] group-hover:border-[#9B7FEA]/50">
               <div className="absolute inset-0 bg-[#04020A]" />
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" style={{ backgroundImage: "url('/astrologer-bg.png')" }} />
+              <Image src="/astrologer-bg.png" fill alt="Astrologer Background" className="object-cover object-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-700" />
               
