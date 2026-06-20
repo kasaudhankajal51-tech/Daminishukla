@@ -145,7 +145,7 @@ export default function Home() {
     <main className="relative min-h-screen w-full bg-[#050505] font-[var(--font-space-grotesk)] text-white overflow-x-hidden selection:bg-orange-500/30">
       {/* Premium Dark Abstract Background */}
       <div className="fixed inset-0 pointer-events-none z-[-1]">
-        <Image src="/premium-bg.png" fill alt="Background" priority quality={80} className="object-cover object-center opacity-80" />
+        <Image src="/premium-bg.png" fill alt="Background" priority quality={75} sizes="100vw" className="object-cover object-center opacity-80" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#050505_90%)]" />
       </div>
 
@@ -220,7 +220,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(255,77,46,0.4)] group-hover:border-[#FF4D2E]/50">
               <div className="absolute inset-0 bg-[#0A0400]" />
-              <Image src="/creator-bg.png" fill alt="Creator Background" className="object-cover object-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+              <Image src="/creator-bg.png" fill sizes="(max-width: 768px) 100vw, 50vw" alt="Creator Background" className="object-cover object-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-700" />
               
@@ -253,7 +253,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(155,127,234,0.4)] group-hover:border-[#9B7FEA]/50">
               <div className="absolute inset-0 bg-[#04020A]" />
-              <Image src="/astrologer-bg.png" fill alt="Astrologer Background" className="object-cover object-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+              <Image src="/astrologer-bg.png" fill sizes="(max-width: 768px) 100vw, 50vw" alt="Astrologer Background" className="object-cover object-center transition-transform duration-[2000ms] group-hover:scale-110 opacity-80 group-hover:opacity-100" />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-700" />
               

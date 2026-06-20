@@ -284,7 +284,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                     <p className="text-sm text-slate-500 font-medium">Upload a bright, light-themed background image for the Creator page hero section.</p>
 
                     <div className="w-full h-64 bg-slate-200 rounded-xl overflow-hidden relative border border-slate-300 my-2 flex items-center justify-center p-2">
-                      <Image src={previewUrls["creator"] || banners.creator} alt="Creator Banner Preview" fill className="object-contain rounded" />
+                      <Image src={previewUrls["creator"] || banners.creator} alt="Creator Banner Preview" fill sizes="(max-width: 768px) 100vw, 400px" className="object-contain rounded" />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                         <span className="bg-white/90 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1"><ImageIcon size={14} /> {previewUrls["creator"] ? "New Preview" : "Current Preview"}</span>
                       </div>
@@ -321,7 +321,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                     <p className="text-sm text-slate-500 font-medium">Upload a mystical, light-themed background image for the Astrologer page hero section.</p>
 
                     <div className="w-full h-64 bg-slate-200 rounded-xl overflow-hidden relative border border-slate-300 my-2 flex items-center justify-center p-2">
-                      <Image src={previewUrls["astrologer"] || banners.astrologer} alt="Astrologer Banner Preview" fill className="object-contain rounded" />
+                      <Image src={previewUrls["astrologer"] || banners.astrologer} alt="Astrologer Banner Preview" fill sizes="(max-width: 768px) 100vw, 400px" className="object-contain rounded" />
                       <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                         <span className="bg-white/90 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1"><ImageIcon size={14} /> {previewUrls["astrologer"] ? "New Preview" : "Current Preview"}</span>
                       </div>

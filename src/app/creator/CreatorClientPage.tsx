@@ -2,8 +2,17 @@
 
 import { motion } from "framer-motion";
 import { Mail, Award, Users, Tv, Star, TrendingUp, Sparkles, Video } from "lucide-react";
-import React, { useState, useCallback, useMemo, memo } from "react";
+import React, { useState, useCallback, memo } from "react";
 import Image from "next/image";
+
+const MILESTONES_AND_IMPACT = [
+  { icon: <Tv size={24} />, title: "TV Show Feature", desc: "Featured in prime time reality shows and talk shows across national television." },
+  { icon: <Star size={24} />, title: "Brand Partnerships", desc: "Collaborated with Fortune 500 beauty, lifestyle, and tech brands." },
+  { icon: <TrendingUp size={24} />, title: "Viral Reels", desc: "Consistently hitting millions of views with relatable and trending content." },
+  { icon: <Users size={24} />, title: "Community Builder", desc: "Fostered a highly engaged community of 2M+ loyal supporters." },
+  { icon: <Award size={24} />, title: "Industry Recognition", desc: "Awarded 'Creator of the Year' at leading digital influencer awards." },
+  { icon: <Sparkles size={24} />, title: "Events & Appearances", desc: "Keynote speaker and special guest at major lifestyle and tech events." },
+];
 
 export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: { bannerUrl: string }) {
   const [formData, setFormData] = useState({
@@ -124,14 +133,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {useMemo(() => [
-            { icon: <Tv size={24} />, title: "TV Show Feature", desc: "Featured in prime time reality shows and talk shows across national television." },
-            { icon: <Star size={24} />, title: "Brand Partnerships", desc: "Collaborated with Fortune 500 beauty, lifestyle, and tech brands." },
-            { icon: <TrendingUp size={24} />, title: "Viral Reels", desc: "Consistently hitting millions of views with relatable and trending content." },
-            { icon: <Users size={24} />, title: "Community Builder", desc: "Fostered a highly engaged community of 2M+ loyal supporters." },
-            { icon: <Award size={24} />, title: "Industry Recognition", desc: "Awarded 'Creator of the Year' at leading digital influencer awards." },
-            { icon: <Sparkles size={24} />, title: "Events & Appearances", desc: "Keynote speaker and special guest at major lifestyle and tech events." },
-          ], []).map((item, i) => (
+          {MILESTONES_AND_IMPACT.map((item, i) => (
             <motion.div 
               key={i}
               whileHover={{ y: -5 }}
@@ -172,7 +174,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
                     <Video size={32} />
                   </div>
                 </div>
-                <Image src="/creator-bg.png" fill alt="TV Feature" className="object-cover" />
+                <Image src="/creator-bg.png" fill sizes="(max-width: 1024px) 100vw, 50vw" alt="TV Feature" className="object-cover" />
               </div>
             </div>
           </div>
