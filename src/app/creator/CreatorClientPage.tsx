@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Award, Users, Tv, Star, TrendingUp, Sparkles, Video } from "lucide-react";
-import React, { useState, useCallback, memo } from "react";
+import { Mail, Award, Users, Tv, Star, TrendingUp, Sparkles, Video, Play, Clock, Eye } from "lucide-react";
+import React, { useState, useCallback, memo, useEffect } from "react";
 import Image from "next/image";
 
 const MILESTONES_AND_IMPACT = [
@@ -24,6 +24,24 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const [youtubeVideos, setYoutubeVideos] = useState<any[]>([]);
+  const [isLoadingVideos, setIsLoadingVideos] = useState(true);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const res = await fetch("/api/youtube");
+        const json = await res.json();
+        if (json.success) setYoutubeVideos(json.data);
+      } catch (err) {
+        console.error("Failed to fetch YouTube videos", err);
+      } finally {
+        setIsLoadingVideos(false);
+      }
+    };
+    fetchVideos();
+  }, []);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -189,7 +207,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
           <div className="w-20 h-1 bg-gradient-to-r from-sky-400 to-cyan-300 mx-auto rounded-full mt-5" />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {/* Instagram Card */}
           <a href="https://instagram.com/daminishukla" target="_blank" rel="noopener noreferrer" className="relative cursor-pointer">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-[24px] blur-md opacity-20" />
@@ -221,22 +239,56 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
               </div>
             </div>
           </a>
+        </div>
 
-          {/* Live Feed Placeholder */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-sky-400 to-cyan-400 rounded-[24px] blur-md opacity-20" />
-            <div className="relative bg-white h-full rounded-[24px] p-8 flex flex-col items-center text-center border border-sky-100 shadow-xl shadow-sky-500/5">
-              <div className="w-16 h-16 rounded-[18px] bg-gradient-to-br from-sky-400 to-cyan-400 flex items-center justify-center text-white mb-5 shadow-lg shadow-sky-500/30">
-                <Sparkles size={28} />
-              </div>
-              <h3 className="text-2xl font-bold font-outfit mb-1 text-slate-900">Live Social Feed</h3>
-              <p className="text-sky-500 font-semibold mb-4">Coming Soon</p>
-              <p className="text-slate-500 text-sm mb-8 leading-relaxed">Space reserved for a dynamic live feed of the latest posts and updates.</p>
-              <div className="mt-auto px-6 py-3 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 text-white font-bold shadow-md shadow-sky-500/20 w-full">
-                Stay Tuned
-              </div>
+        {/* Live Social Feed */}
+        <div className="mt-16">
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-red-600 text-white flex items-center justify-center shadow-lg shadow-red-500/30">
+              <Play size={20} fill="currentColor" />
             </div>
+            <h3 className="text-2xl md:text-3xl font-bold font-outfit text-slate-900">Latest from YouTube</h3>
           </div>
+
+          {isLoadingVideos ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="animate-pulse bg-white rounded-[24px] overflow-hidden border border-slate-100 h-72 shadow-sm" />
+              ))}
+            </div>
+          ) : youtubeVideos.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {youtubeVideos.map(video => (
+                <a 
+                  key={video.id} 
+                  href={`https://www.youtube.com/watch?v=${video.id}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group relative bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(239,68,68,0.15)] transition-all duration-300 transform hover:-translate-y-1 flex flex-col"
+                >
+                  <div className="relative aspect-video w-full overflow-hidden shrink-0 bg-slate-100">
+                    <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+                    <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg flex items-center gap-1">
+                      <Clock size={12} /> {video.duration}
+                    </div>
+                  </div>
+                  <div className="p-6 flex flex-col flex-1">
+                    <h4 className="font-bold text-slate-900 line-clamp-2 mb-3 group-hover:text-red-600 transition-colors leading-snug">{video.title}</h4>
+                    <div className="mt-auto flex items-center text-xs text-slate-500 font-semibold gap-2">
+                      <span className="flex items-center gap-1"><Eye size={14} /> {video.views}</span>
+                      <span className="text-slate-300">•</span>
+                      <span>{new Date(video.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 bg-white rounded-[24px] border border-slate-100 shadow-sm">
+              <p className="text-slate-500 font-medium">New videos coming soon.</p>
+            </div>
+          )}
         </div>
       </section>
 
