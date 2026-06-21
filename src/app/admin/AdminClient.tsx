@@ -314,37 +314,28 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
         </div>
 
         {/* Menu */}
-        <div className="flex-1 overflow-y-auto py-6 px-3 space-y-8">
+        <div className="flex-1 overflow-y-auto py-6 px-3 space-y-2">
           
-          <div>
-            <div className="text-[10px] font-bold text-slate-500 tracking-widest px-3 mb-3">OVERVIEW</div>
-            <button 
-              onClick={() => { setActiveTab("dashboard"); setIsMobileMenuOpen(false); }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeTab === "dashboard" ? "bg-blue-600/10 text-blue-400 border border-blue-600/20" : "hover:bg-slate-800 hover:text-white"}`}
-            >
-              <LayoutDashboard size={16} /> Dashboard
-            </button>
-          </div>
+          <button 
+            onClick={() => { setActiveTab("dashboard"); setIsMobileMenuOpen(false); }}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "dashboard" ? "bg-blue-600 text-white shadow-md shadow-blue-900/20" : "text-slate-400 hover:bg-slate-800 hover:text-white"}`}
+          >
+            <LayoutDashboard size={16} className={activeTab === "dashboard" ? "text-white" : "text-slate-500"} /> Dashboard
+          </button>
 
-          <div>
-            <div className="text-[10px] font-bold text-slate-500 tracking-widest px-3 mb-3">LEAD PIPELINE</div>
-            <button 
-              onClick={() => { setActiveTab("export"); setIsMobileMenuOpen(false); }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeTab === "export" ? "bg-blue-600/10 text-blue-400 border border-blue-600/20" : "hover:bg-slate-800 hover:text-white"}`}
-            >
-              <MessageSquare size={16} /> Enquiries Inbox
-            </button>
-          </div>
+          <button 
+            onClick={() => { setActiveTab("export"); setIsMobileMenuOpen(false); }}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "export" ? "bg-blue-600 text-white shadow-md shadow-blue-900/20" : "text-slate-400 hover:bg-slate-800 hover:text-white"}`}
+          >
+            <MessageSquare size={16} className={activeTab === "export" ? "text-white" : "text-slate-500"} /> Enquiries Inbox
+          </button>
 
-          <div>
-            <div className="text-[10px] font-bold text-slate-500 tracking-widest px-3 mb-3">OPERATIONS</div>
-            <button 
-              onClick={() => { setActiveTab("banners"); setIsMobileMenuOpen(false); }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeTab === "banners" ? "bg-blue-600/10 text-blue-400 border border-blue-600/20" : "hover:bg-slate-800 hover:text-white"}`}
-            >
-              <Briefcase size={16} /> Banner Management
-            </button>
-          </div>
+          <button 
+            onClick={() => { setActiveTab("banners"); setIsMobileMenuOpen(false); }}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "banners" ? "bg-blue-600 text-white shadow-md shadow-blue-900/20" : "text-slate-400 hover:bg-slate-800 hover:text-white"}`}
+          >
+            <Briefcase size={16} className={activeTab === "banners" ? "text-white" : "text-slate-500"} /> Banner Management
+          </button>
 
         </div>
 
@@ -383,7 +374,9 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Header actions removed per request */}
+            <button onClick={onLogout} className="flex items-center gap-2 px-4 py-2 bg-red-500 border border-red-600 rounded-lg text-sm font-bold text-white hover:bg-red-600 transition-all shadow-sm shadow-red-500/20">
+              <LogOut size={16} /> Logout
+            </button>
           </div>
         </header>
 
@@ -399,7 +392,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                 </div>
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   
                   {/* Total Leads Card */}
                   <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm relative overflow-hidden group">
@@ -467,22 +460,6 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                       <p className="text-xs font-medium text-slate-500 mt-1">New Leads Today</p>
                     </div>
                     <div className="mt-4 h-0.5 w-1/3 bg-emerald-500 rounded-full" />
-                  </div>
-
-                  {/* Course Purchases (Mock) */}
-                  <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm relative overflow-hidden group">
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500" />
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-8 h-8 rounded-full bg-cyan-50 text-cyan-600 flex items-center justify-center">
-                        <BookOpen size={14} />
-                      </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Recorded</span>
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-slate-900">0</h3>
-                      <p className="text-xs font-medium text-slate-500 mt-1">Course Purchases</p>
-                    </div>
-                    <div className="mt-4 h-0.5 w-1/3 bg-cyan-500 rounded-full" />
                   </div>
 
                 </div>
