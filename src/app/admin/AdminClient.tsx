@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, memo } from "react";
 import Image from "next/image";
-import { Download, Upload, LogOut, Settings, Image as ImageIcon } from "lucide-react";
+import { Download, Upload, LogOut, Settings, Image as ImageIcon, Menu, X, Calendar, Mail, Phone } from "lucide-react";
 
 export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean }) {
   const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
@@ -68,56 +68,63 @@ export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean 
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center font-inter p-4">
-        <div className="bg-white p-8 md:p-10 rounded-3xl border border-slate-200 shadow-xl w-full max-w-md relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-sky-400 to-blue-500" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center font-inter p-4 relative overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/10 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-400/10 blur-[100px] pointer-events-none" />
+        
+        <div className="bg-white/80 backdrop-blur-xl p-8 md:p-12 rounded-[2rem] border border-white/50 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] w-full max-w-md relative z-10 transition-all duration-500">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 rounded-t-[2rem]" />
 
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-100 shadow-sm">
-              <Settings className="text-blue-500" size={32} />
+          <div className="text-center mb-10">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white shadow-inner relative group cursor-pointer hover:scale-105 transition-transform duration-300">
+              <Settings className="text-blue-600 group-hover:rotate-90 transition-transform duration-700 ease-in-out" size={36} />
+              <div className="absolute inset-0 rounded-2xl bg-blue-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
             </div>
-            <h1 className="text-3xl font-bold font-outfit text-slate-900 mb-2">Admin Portal</h1>
-            <p className="text-slate-500 font-medium">Sign in to manage your website</p>
+            <h1 className="text-3xl md:text-4xl font-bold font-outfit text-slate-900 mb-3 tracking-tight">Admin Portal</h1>
+            <p className="text-slate-500 font-medium">Secure access to your dashboard</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700 ml-1">Username</label>
+              <label className="text-sm font-bold text-slate-700 ml-1">Username</label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all font-medium"
+                className="w-full bg-slate-50/50 border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium placeholder:text-slate-400"
+                placeholder="Enter your username"
                 required
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-slate-700 ml-1">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all font-medium"
-                required
-              />
-              <div className="flex justify-between items-center mt-1">
+              <div className="flex justify-between items-end mb-2">
+                <label className="text-sm font-bold text-slate-700 ml-1">Password</label>
                 <button
                   type="button"
                   onClick={handleForgotPassword}
                   disabled={isForgotLoading}
-                  className="text-sm font-semibold text-blue-500 hover:text-blue-600 transition-colors disabled:opacity-50"
+                  className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors disabled:opacity-50 hover:underline underline-offset-4"
                 >
-                  {isForgotLoading ? "Sending..." : "Forgot Password?"}
+                  {isForgotLoading ? "Sending..." : "Forgot?"}
                 </button>
               </div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-slate-50/50 border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium placeholder:text-slate-400"
+                placeholder="••••••••"
+                required
+              />
             </div>
-            {loginError && <p className="text-red-500 text-sm font-medium text-center bg-red-50 p-2 rounded-lg">{loginError}</p>}
-            {forgotMessage && <p className="text-blue-600 text-sm font-medium text-center bg-blue-50 p-2 rounded-lg">{forgotMessage}</p>}
+            {loginError && <div className="animate-in slide-in-from-top-1 fade-in duration-300 text-red-600 text-sm font-semibold text-center bg-red-50/80 backdrop-blur-sm p-3 rounded-xl border border-red-100">{loginError}</div>}
+            {forgotMessage && <div className="animate-in slide-in-from-top-1 fade-in duration-300 text-blue-700 text-sm font-semibold text-center bg-blue-50/80 backdrop-blur-sm p-3 rounded-xl border border-blue-100">{forgotMessage}</div>}
             <button
               type="submit"
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-500 text-white font-bold text-lg shadow-[0_4px_15px_rgba(59,130,246,0.3)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 transition-all"
+              className="w-full py-4 mt-2 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
             >
               Sign In
+              <div className="w-5 h-5 flex items-center justify-center group-hover:translate-x-1 transition-transform">→</div>
             </button>
           </form>
         </div>
@@ -139,6 +146,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
   const [isExporting, setIsExporting] = useState(false);
   const [enquiries, setEnquiries] = useState<any[]>([]);
   const [isLoadingEnquiries, setIsLoadingEnquiries] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -218,54 +226,88 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
   }, [dateFrom, dateTo]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-inter flex flex-col md:flex-row">
+    <div className="min-h-screen bg-slate-50/50 text-slate-800 font-inter flex flex-col md:flex-row overflow-hidden relative">
+
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center justify-between p-4 bg-white/80 backdrop-blur-md border-b border-slate-200 z-20 sticky top-0">
+        <div className="flex items-center gap-3">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2 rounded-xl border border-blue-100 shadow-sm">
+            <Settings className="text-blue-600" size={20} />
+          </div>
+          <span className="font-bold font-outfit text-xl text-slate-900">Damini Admin</span>
+        </div>
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+          className="p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 transition-opacity" 
+          onClick={() => setIsMobileMenuOpen(false)} 
+        />
+      )}
 
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-white border-r border-slate-200 md:min-h-screen flex flex-col shrink-0">
-        <div className="p-6 border-b border-slate-200 flex items-center gap-3">
-          <div className="bg-blue-50 p-2 rounded-lg border border-blue-100">
-            <Settings className="text-blue-500" size={20} />
+      <aside className={`fixed md:static inset-y-0 left-0 w-72 md:w-72 bg-white border-r border-slate-200 md:h-screen flex flex-col z-40 transform transition-transform duration-300 ease-out shadow-2xl md:shadow-none ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+        <div className="hidden md:flex p-6 border-b border-slate-100 items-center gap-3">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2.5 rounded-xl border border-blue-100 shadow-sm group cursor-pointer hover:scale-105 transition-transform">
+            <Settings className="text-blue-600 group-hover:rotate-90 transition-transform duration-700" size={22} />
           </div>
-          <span className="font-bold font-outfit text-xl text-slate-800">DS Workspace</span>
+          <span className="font-bold font-outfit text-2xl text-slate-900 tracking-tight">Damini Admin</span>
         </div>
 
-        <div className="flex-1 py-6 flex flex-col gap-2 px-4">
+        {/* Mobile Sidebar Header */}
+        <div className="flex md:hidden p-6 border-b border-slate-100 items-center justify-between">
+          <span className="font-bold font-outfit text-2xl text-slate-900">Menu</span>
+          <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-slate-100 text-slate-600 rounded-full">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="flex-1 py-6 flex flex-col gap-2 px-4 overflow-y-auto">
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-4">Dashboard</div>
           <button
-            onClick={() => setActiveTab("banners")}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left font-medium ${activeTab === "banners"
-              ? "bg-sky-50 text-sky-700 border border-sky-100 shadow-sm"
+            onClick={() => { setActiveTab("banners"); setIsMobileMenuOpen(false); }}
+            className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all text-left font-semibold group ${activeTab === "banners"
+              ? "bg-blue-50 text-blue-700 border border-blue-100 shadow-sm"
               : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent"
               }`}
           >
-            <Upload size={18} />
+            <Upload size={18} className={activeTab === "banners" ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600 transition-colors"} />
             Banner Management
           </button>
 
           <button
-            onClick={() => setActiveTab("export")}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left font-medium ${activeTab === "export"
-              ? "bg-green-50 text-green-700 border border-green-100 shadow-sm"
+            onClick={() => { setActiveTab("export"); setIsMobileMenuOpen(false); }}
+            className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all text-left font-semibold group ${activeTab === "export"
+              ? "bg-blue-50 text-blue-700 border border-blue-100 shadow-sm"
               : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent"
               }`}
           >
-            <Download size={18} />
+            <Download size={18} className={activeTab === "export" ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600 transition-colors"} />
             Export Enquiries
           </button>
         </div>
 
-        <div className="p-4 border-t border-slate-200">
+        <div className="p-6 border-t border-slate-100">
           <button
             onClick={onLogout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200 transition-colors font-medium text-sm"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-red-50/50 text-red-600 hover:bg-red-50 hover:text-red-700 border border-red-100 transition-colors font-bold text-sm shadow-sm hover:shadow active:scale-[0.98]"
           >
-            <LogOut size={16} />
+            <LogOut size={18} />
             <span>Sign Out</span>
           </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto h-screen">
+      <main className="flex-1 p-4 md:p-8 lg:p-10 overflow-y-auto h-[calc(100vh-73px)] md:h-screen relative w-full bg-slate-50/50">
+        <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-white to-transparent pointer-events-none opacity-50" />
         <div className="max-w-5xl mx-auto">
 
           {activeTab === "banners" && (
@@ -275,11 +317,11 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                 <p className="text-slate-500 font-medium mt-2">Upload and manage the hero banners for your pages.</p>
               </div>
 
-              <section className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-sky-400 to-cyan-400" />
+              <section className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group">
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-sky-400 to-indigo-500 group-hover:w-2 transition-all duration-300" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-100 flex flex-col">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-5 bg-slate-50/80 p-6 rounded-2xl border border-slate-100 flex flex-col hover:bg-white hover:shadow-lg transition-all duration-300 group/card">
                     <h3 className="font-bold text-lg text-slate-800">Creator Page Banner</h3>
                     <p className="text-sm text-slate-500 font-medium">Upload a bright, light-themed background image for the Creator page hero section.</p>
 
@@ -316,7 +358,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                     {uploadStatus["creator"] && <span className="text-sm font-semibold text-sky-600 block mt-2">{uploadStatus["creator"]}</span>}
                   </div>
 
-                  <div className="space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-100 flex flex-col">
+                  <div className="space-y-5 bg-slate-50/80 p-6 rounded-2xl border border-slate-100 flex flex-col hover:bg-white hover:shadow-lg transition-all duration-300 group/card">
                     <h3 className="font-bold text-lg text-slate-800">Astrologer Page Banner</h3>
                     <p className="text-sm text-slate-500 font-medium">Upload a mystical, light-themed background image for the Astrologer page hero section.</p>
 
@@ -397,53 +439,101 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
               </section>
 
               {/* Enquiries Table Section */}
-              <section className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mt-8">
-                <h3 className="text-xl font-bold font-outfit text-slate-900 mb-6">Recent Enquiries</h3>
+              <section className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mt-8 relative z-10">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-2xl font-bold font-outfit text-slate-900 tracking-tight">Recent Enquiries</h3>
+                  <span className="bg-slate-100 text-slate-600 font-bold px-3 py-1 rounded-full text-sm">{enquiries.length}</span>
+                </div>
 
                 {isLoadingEnquiries ? (
-                  <div className="flex justify-center items-center py-12">
-                    <span className="animate-pulse text-slate-400 font-medium">Loading enquiries...</span>
+                  <div className="flex justify-center items-center py-16">
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-10 h-10 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin" />
+                      <span className="animate-pulse text-slate-500 font-semibold">Loading enquiries...</span>
+                    </div>
                   </div>
                 ) : enquiries.length === 0 ? (
-                  <div className="text-center py-12 bg-slate-50 rounded-2xl border border-slate-100">
-                    <p className="text-slate-500 font-medium">No enquiries found yet.</p>
+                  <div className="text-center py-16 bg-slate-50 rounded-3xl border border-slate-100 border-dashed">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-slate-100">
+                      <Download className="text-slate-300" size={24} />
+                    </div>
+                    <p className="text-slate-500 font-medium text-lg">No enquiries found for this period.</p>
                   </div>
                 ) : (
-                  <div className="overflow-x-auto rounded-2xl border border-slate-200">
-                    <table className="w-full text-left border-collapse">
-                      <thead>
-                        <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-sm">
-                          <th className="p-4 whitespace-nowrap">Date</th>
-                          <th className="p-4 whitespace-nowrap">Name</th>
-                          <th className="p-4 whitespace-nowrap">Contact</th>
-                          <th className="p-4 whitespace-nowrap">Type</th>
-                          <th className="p-4 min-w-[300px]">Message</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100 text-sm">
-                        {enquiries.map((enq, i) => (
-                          <tr key={enq._id || i} className="hover:bg-slate-50 transition-colors">
-                            <td className="p-4 whitespace-nowrap text-slate-500">
-                              {new Date(enq.created_at || new Date()).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
-                            </td>
-                            <td className="p-4 font-medium text-slate-800 whitespace-nowrap">{enq.full_name || enq.name || '-'}</td>
-                            <td className="p-4 text-slate-600 whitespace-nowrap">
-                              <div>{enq.email || '-'}</div>
-                              {enq.phone && <div className="text-xs text-slate-400 mt-0.5">{enq.phone}</div>}
-                            </td>
-                            <td className="p-4">
-                              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-100 whitespace-nowrap">
-                                {enq.enquiry_type || enq.enquiryType || 'General'}
+                  <>
+                    {/* Mobile Card View */}
+                    <div className="block md:hidden space-y-4">
+                      {enquiries.map((enq, i) => (
+                        <div key={enq._id || i} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                          <div className="flex justify-between items-start gap-4">
+                            <div>
+                              <h4 className="font-bold text-lg text-slate-900 leading-tight">{enq.full_name || enq.name || '-'}</h4>
+                              <span className="text-xs font-medium text-slate-500 flex items-center gap-1.5 mt-1.5">
+                                <Calendar size={13} className="text-slate-400" />
+                                {new Date(enq.created_at || new Date()).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
                               </span>
-                            </td>
-                            <td className="p-4 text-slate-600 leading-relaxed max-w-md truncate hover:whitespace-normal hover:break-words">
-                              {enq.message || '-'}
-                            </td>
+                            </div>
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 shadow-sm whitespace-nowrap">
+                              {enq.enquiry_type || enq.enquiryType || 'General'}
+                            </span>
+                          </div>
+                          
+                          <div className="h-px w-full bg-slate-100" />
+                          
+                          <div className="text-sm font-medium text-slate-600 space-y-2">
+                            <div className="flex items-center gap-2"><Mail size={15} className="text-slate-400" /> <span className="truncate">{enq.email || '-'}</span></div>
+                            {enq.phone && <div className="flex items-center gap-2"><Phone size={15} className="text-slate-400" /> <span>{enq.phone}</span></div>}
+                          </div>
+                          
+                          <div className="text-sm font-medium text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100 leading-relaxed">
+                            <p>{enq.message || '-'}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-sm tracking-wide">
+                            <th className="p-5 whitespace-nowrap">Date</th>
+                            <th className="p-5 whitespace-nowrap">Name</th>
+                            <th className="p-5 whitespace-nowrap">Contact</th>
+                            <th className="p-5 whitespace-nowrap">Type</th>
+                            <th className="p-5 min-w-[350px]">Message</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 text-sm font-medium">
+                          {enquiries.map((enq, i) => (
+                            <tr key={enq._id || i} className="hover:bg-slate-50/80 transition-colors group">
+                              <td className="p-5 whitespace-nowrap text-slate-500">
+                                <div className="flex items-center gap-2">
+                                  <Calendar size={14} className="text-slate-400 group-hover:text-blue-400 transition-colors" />
+                                  {new Date(enq.created_at || new Date()).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                </div>
+                              </td>
+                              <td className="p-5 font-bold text-slate-900 whitespace-nowrap">{enq.full_name || enq.name || '-'}</td>
+                              <td className="p-5 text-slate-600 whitespace-nowrap">
+                                <div className="flex items-center gap-2 mb-1"><Mail size={13} className="text-slate-400" /> {enq.email || '-'}</div>
+                                {enq.phone && <div className="flex items-center gap-2 text-slate-500"><Phone size={13} className="text-slate-400" /> {enq.phone}</div>}
+                              </td>
+                              <td className="p-5">
+                                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 shadow-sm whitespace-nowrap">
+                                  {enq.enquiry_type || enq.enquiryType || 'General'}
+                                </span>
+                              </td>
+                              <td className="p-5 text-slate-600 leading-relaxed max-w-md">
+                                <div className="line-clamp-2 hover:line-clamp-none transition-all duration-300 cursor-pointer bg-transparent hover:bg-white hover:shadow-sm hover:border-slate-200 border border-transparent p-2 -m-2 rounded-lg relative z-0 hover:z-10">
+                                  {enq.message || '-'}
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
                 )}
               </section>
             </div>

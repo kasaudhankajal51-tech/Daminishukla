@@ -105,7 +105,7 @@ export async function POST(req: Request) {
       from: process.env.EMAIL_USER || "AAPKIDAMINI@GMAIL.COM",
       to: process.env.EMAIL_USER || "AAPKIDAMINI@GMAIL.COM",
       replyTo: email,
-      subject: `New Enquiry: ${enquiryType} from ${fullName}`,
+      subject: "Daminishukla.com website query",
       html: htmlTemplate,
     };
 
