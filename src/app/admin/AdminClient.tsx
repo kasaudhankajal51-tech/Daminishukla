@@ -187,6 +187,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
   const [activeTab, setActiveTab] = useState<"banners" | "export">("banners");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [filterType, setFilterType] = useState("All");
   const [uploadStatus, setUploadStatus] = useState<Record<string, string>>({});
   const [banners, setBanners] = useState({ creator: "/creator-bg.png", astrologer: "/astrologer-bg.png" });
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
@@ -462,35 +463,64 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                 <p className="text-slate-500 font-medium mt-2">Download all brand enquiries or filter by a specific date range.</p>
               </div>
 
-              <section className="bg-white/80 backdrop-blur-xl border border-white/80 rounded-[2rem] p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group">
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-green-400 to-emerald-500 group-hover:w-2 transition-all duration-300" />
+              {/* Production-Level Filter Section */}
+              <section className="bg-white border border-slate-200 shadow-sm rounded-2xl p-6 md:p-8">
+                <div className="flex flex-col lg:flex-row items-end gap-6">
+                  
+                  {/* Filters Container */}
+                  <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-3 gap-5">
+                    
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">From Date</label>
+                      <input
+                        type="date"
+                        value={dateFrom}
+                        onChange={(e) => setDateFrom(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors font-medium hover:border-slate-300"
+                      />
+                    </div>
 
-                <div className="flex flex-col md:flex-row items-end gap-6 bg-slate-50/50 p-6 rounded-2xl border border-slate-100/50">
-                  <div className="flex-1 space-y-2 w-full">
-                    <label className="text-sm font-bold text-slate-700 ml-1">From Date</label>
-                    <input
-                      type="date"
-                      value={dateFrom}
-                      onChange={(e) => setDateFrom(e.target.value)}
-                      className="w-full bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all font-medium hover:border-green-300"
-                    />
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">To Date</label>
+                      <input
+                        type="date"
+                        value={dateTo}
+                        onChange={(e) => setDateTo(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors font-medium hover:border-slate-300"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Category Filter</label>
+                      <div className="relative">
+                        <select
+                          value={filterType}
+                          onChange={(e) => setFilterType(e.target.value)}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-3.5 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors font-medium hover:border-slate-300 appearance-none"
+                        >
+                          <option value="All">All Categories</option>
+                          <option value="Astrology">Astrology</option>
+                          <option value="Creator">Creator</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
-                  <div className="flex-1 space-y-2 w-full">
-                    <label className="text-sm font-bold text-slate-700 ml-1">To Date</label>
-                    <input
-                      type="date"
-                      value={dateTo}
-                      onChange={(e) => setDateTo(e.target.value)}
-                      className="w-full bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all font-medium hover:border-green-300"
-                    />
+
+                  {/* Export Button */}
+                  <div className="w-full lg:w-auto">
+                    <button
+                      onClick={handleExport}
+                      disabled={isExporting}
+                      className="w-full lg:w-auto px-8 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-900 active:scale-[0.98]"
+                    >
+                      {isExporting ? <span className="animate-pulse">Exporting...</span> : <><Download size={18} /> Export Data</>}
+                    </button>
                   </div>
-                  <button
-                    onClick={handleExport}
-                    disabled={isExporting}
-                    className="w-full md:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold hover:shadow-[0_6px_20px_rgba(16,185,129,0.3)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
-                  >
-                    {isExporting ? <span className="animate-pulse">Exporting...</span> : <><Download size={18} /> Export XLS</>}
-                  </button>
+
                 </div>
               </section>
 
@@ -498,7 +528,9 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
               <section className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mt-8 relative z-10">
                 <div className="flex items-center justify-between mb-8">
                   <h3 className="text-2xl font-bold font-outfit text-slate-900 tracking-tight">Recent Enquiries</h3>
-                  <span className="bg-slate-100 text-slate-600 font-bold px-3 py-1 rounded-full text-sm">{enquiries.length}</span>
+                  <span className="bg-blue-50 text-blue-700 font-bold px-4 py-1.5 rounded-full text-sm border border-blue-100 shadow-sm">
+                    {enquiries.filter(e => filterType === "All" || (e.enquiry_type || e.enquiryType || "General").toLowerCase().includes(filterType.toLowerCase())).length} Records
+                  </span>
                 </div>
 
                 {isLoadingEnquiries ? (
@@ -519,7 +551,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                   <>
                     {/* Mobile Card View */}
                     <div className="block md:hidden space-y-4">
-                      {enquiries.map((enq, i) => (
+                      {enquiries.filter(e => filterType === "All" || (e.enquiry_type || e.enquiryType || "General").toLowerCase().includes(filterType.toLowerCase())).map((enq, i) => (
                         <div key={enq._id || i} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition-shadow">
                           <div className="flex justify-between items-start gap-4">
                             <div>
@@ -561,7 +593,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 text-sm font-medium relative bg-transparent">
-                          {enquiries.map((enq, i) => (
+                          {enquiries.filter(e => filterType === "All" || (e.enquiry_type || e.enquiryType || "General").toLowerCase().includes(filterType.toLowerCase())).map((enq, i) => (
                             <tr key={enq._id || i} className="hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 group relative z-0 hover:z-10">
                               <td className="p-5 whitespace-nowrap text-slate-500">
                                 <div className="flex items-center gap-2">
