@@ -301,14 +301,14 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
       </div>
 
       {/* Sidebar */}
-      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-blue-950 border-r border-blue-900/50 md:h-screen flex flex-col z-40 shadow-xl shadow-blue-900/10 transform transition-transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-[#060B19] border-r border-[#111A33] md:h-screen flex flex-col z-40 shadow-xl shadow-black/20 transform transition-transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         {/* Header */}
-        <div className="p-5 flex items-center justify-between border-b border-blue-900/50">
+        <div className="p-5 flex items-center justify-between border-b border-[#111A33]">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-[0_2px_10px_rgba(37,99,235,0.4)]">DS</div>
             <span className="font-bold text-sm text-white tracking-wide">DAMINI ADMIN</span>
           </div>
-          <button className="hidden md:flex w-6 h-6 rounded-md bg-blue-900 border border-blue-800 items-center justify-center text-blue-300 hover:bg-blue-800 hover:text-white transition-colors">
+          <button className="hidden md:flex w-6 h-6 rounded-md bg-[#111A33] border border-[#1A2644] items-center justify-center text-blue-300 hover:bg-[#1A2644] hover:text-white transition-colors">
             <ChevronLeft size={14} />
           </button>
         </div>
@@ -318,7 +318,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
           
           <button 
             onClick={() => { setActiveTab("dashboard"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "dashboard" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-blue-900/50 hover:text-white"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "dashboard" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-[#111A33] hover:text-white"}`}
           >
             <div className={`p-1.5 rounded-lg ${activeTab === "dashboard" ? "bg-white/20 text-white" : "bg-transparent text-blue-400"}`}>
               <LayoutDashboard size={18} />
@@ -328,7 +328,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
 
           <button 
             onClick={() => { setActiveTab("export"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "export" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-blue-900/50 hover:text-white"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "export" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-[#111A33] hover:text-white"}`}
           >
             <div className={`p-1.5 rounded-lg ${activeTab === "export" ? "bg-white/20 text-white" : "bg-transparent text-blue-400"}`}>
               <MessageSquare size={18} />
@@ -338,7 +338,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
 
           <button 
             onClick={() => { setActiveTab("banners"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "banners" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-blue-900/50 hover:text-white"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "banners" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-[#111A33] hover:text-white"}`}
           >
             <div className={`p-1.5 rounded-lg ${activeTab === "banners" ? "bg-white/20 text-white" : "bg-transparent text-blue-400"}`}>
               <Briefcase size={18} />
@@ -349,10 +349,10 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
         </div>
 
         {/* Bottom User */}
-        <div className="p-4 border-t border-blue-900/50">
-          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-blue-900/50 transition-colors">
+        <div className="p-4 border-t border-[#111A33]">
+          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-[#111A33] transition-colors">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-blue-900 text-white border border-blue-800 flex items-center justify-center font-bold text-xs shadow-sm">AD</div>
+              <div className="w-9 h-9 rounded-full bg-[#111A33] text-white border border-[#1A2644] flex items-center justify-center font-bold text-xs shadow-sm">AD</div>
               <div>
                 <div className="text-white text-sm font-bold leading-tight">Administrator</div>
                 <div className="text-blue-400 text-[10px] font-semibold tracking-wide uppercase mt-0.5">Super Admin</div>
@@ -396,7 +396,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
             {activeTab === "dashboard" && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-slate-900">Welcome, DS Astrology Admin</h2>
+                  <h2 className="text-2xl font-bold text-slate-900">Welcome, Damini Admin</h2>
                   <p className="text-xs font-medium text-slate-500 mt-1">Live analytics · automatically synced · last updated just now</p>
                 </div>
 
