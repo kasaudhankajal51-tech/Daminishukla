@@ -19,7 +19,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
     fullName: "",
     email: "",
     phone: "",
-    enquiryType: "Brand Promotion",
+    enquiryType: "Brand Promotion - Creator",
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +36,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
       });
       if (res.ok) {
         setSubmitStatus("success");
-        setFormData({ fullName: "", email: "", phone: "", enquiryType: "Brand Promotion", message: "" });
+        setFormData({ fullName: "", email: "", phone: "", enquiryType: "Brand Promotion - Creator", message: "" });
       } else {
         setSubmitStatus("error");
       }
@@ -307,12 +307,12 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
                     onChange={(e) => setFormData({...formData, enquiryType: e.target.value})}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-100 focus:border-sky-400 transition-all font-medium appearance-none cursor-pointer"
                   >
-                    <option value="Brand Promotion">Brand Promotion</option>
-                    <option value="Sponsored Reels">Sponsored Reels</option>
-                    <option value="YouTube Integration">YouTube Integration</option>
-                    <option value="Event / Show or TV">Event / Show or TV</option>
-                    <option value="Product Gifting">Product Gifting</option>
-                    <option value="Other">Other</option>
+                    <option value="Brand Promotion - Creator">Brand Promotion</option>
+                    <option value="Sponsored Reels - Creator">Sponsored Reels</option>
+                    <option value="YouTube Integration - Creator">YouTube Integration</option>
+                    <option value="Event / Show or TV - Creator">Event / Show or TV</option>
+                    <option value="Product Gifting - Creator">Product Gifting</option>
+                    <option value="Other - Creator">Other</option>
                   </select>
                 </div>
               </div>

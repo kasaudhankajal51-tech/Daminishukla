@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Moon, Star, Sun, Compass, BookOpen, Heart, Briefcase, GraduationCap, ArrowRight } from "lucide-react";
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 
 const ZODIAC_SIGNS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
 
@@ -38,6 +38,37 @@ const TRUSTED_CREDENTIALS = [
 export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
   const dsAstrologyUrl = "https://dsastrology.com";
   const [mounted, setMounted] = useState(false);
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    enquiryType: "Birth Chart Reading - Astrology",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+      if (res.ok) {
+        setSubmitStatus("success");
+        setFormData({ fullName: "", email: "", phone: "", enquiryType: "Birth Chart Reading - Astrology", message: "" });
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (err) {
+      setSubmitStatus("error");
+    }
+    setIsSubmitting(false);
+  }, [formData]);
 
   useEffect(() => {
     setMounted(true);
@@ -120,14 +151,12 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
               Book a Consultation
               <ArrowRight size={20} />
             </a>
-            <a 
-              href={dsAstrologyUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <button 
+              onClick={() => document.getElementById("astro-enquiry-form")?.scrollIntoView({ behavior: "smooth" })}
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-800 font-semibold text-lg hover:bg-slate-50 hover:shadow-md transition-all"
             >
-              Explore Services
-            </a>
+              Request Reading
+            </button>
           </motion.div>
         </div>
       </section>
@@ -228,6 +257,112 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
               </a>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Enquiry Form */}
+      <section id="astro-enquiry-form" className="max-w-4xl mx-auto px-4 py-24">
+        <div className="bg-white rounded-3xl p-8 md:p-12 border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.04)] relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 to-blue-500" />
+          
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">Request a Reading</h2>
+            <p className="text-slate-500 font-medium">Fill out the form below to book a consultation or enquire about services.</p>
+          </div>
+
+          {submitStatus === "success" ? (
+            <div className="bg-green-50 border border-green-200 text-green-800 p-8 rounded-2xl text-center shadow-sm">
+              <h3 className="text-2xl font-bold mb-3 font-outfit">Request Sent Successfully!</h3>
+              <p className="text-green-700">Thank you for reaching out. We will get back to you shortly.</p>
+              <button 
+                onClick={() => setSubmitStatus("idle")}
+                className="mt-8 px-8 py-3 bg-white border border-green-200 text-green-700 font-semibold hover:bg-green-50 rounded-full transition-colors shadow-sm"
+              >
+                Send Another Request
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">Full Name *</label>
+                  <input 
+                    required 
+                    type="text" 
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all placeholder:text-slate-400 font-medium"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">Email Address *</label>
+                  <input 
+                    required 
+                    type="email" 
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all placeholder:text-slate-400 font-medium"
+                    placeholder="john@company.com"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">Phone Number</label>
+                  <input 
+                    type="tel" 
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all placeholder:text-slate-400 font-medium"
+                    placeholder="+1 (555) 000-0000"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">Service Type *</label>
+                  <select 
+                    required
+                    value={formData.enquiryType}
+                    onChange={(e) => setFormData({...formData, enquiryType: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium appearance-none cursor-pointer"
+                  >
+                    <option value="Birth Chart Reading - Astrology">Birth Chart Reading</option>
+                    <option value="Predictive Astrology - Astrology">Predictive Astrology</option>
+                    <option value="Kundali Milan - Astrology">Kundali Milan</option>
+                    <option value="Astro Courses - Astrology">Astro Courses</option>
+                    <option value="Other - Astrology">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 ml-1">Message *</label>
+                <textarea 
+                  required 
+                  rows={5}
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all resize-none placeholder:text-slate-400 font-medium"
+                  placeholder="Tell us about your requirements or questions..."
+                ></textarea>
+              </div>
+
+              {submitStatus === "error" && (
+                <div className="text-red-500 text-sm font-medium text-center bg-red-50 p-3 rounded-lg">
+                  Something went wrong. Please try again later.
+                </div>
+              )}
+
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-bold text-lg shadow-[0_4px_15px_rgba(79,70,229,0.3)] hover:shadow-[0_6px_25px_rgba(79,70,229,0.4)] hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {isSubmitting ? "Sending Request..." : "Submit Request"}
+              </button>
+            </form>
+          )}
         </div>
       </section>
 
