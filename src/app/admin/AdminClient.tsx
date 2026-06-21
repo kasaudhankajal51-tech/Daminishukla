@@ -301,56 +301,56 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
       </div>
 
       {/* Sidebar */}
-      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-[#0B1121] text-slate-300 md:h-screen flex flex-col z-40 transform transition-transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-slate-50 border-r border-slate-200 md:h-screen flex flex-col z-40 transform transition-transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         {/* Header */}
-        <div className="p-5 flex items-center justify-between border-b border-slate-800/50">
+        <div className="p-5 flex items-center justify-between border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center text-slate-900 font-bold text-xs">DS</div>
-            <span className="font-bold text-sm text-white tracking-wide">ADMIN CONSOLE</span>
+            <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-sm">DS</div>
+            <span className="font-bold text-sm text-slate-900 tracking-wide">ADMIN CONSOLE</span>
           </div>
-          <button className="hidden md:flex w-6 h-6 rounded-md bg-slate-800 items-center justify-center hover:bg-slate-700 transition-colors">
+          <button className="hidden md:flex w-6 h-6 rounded-md bg-slate-50 border border-slate-200 items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors">
             <ChevronLeft size={14} />
           </button>
         </div>
 
         {/* Menu */}
-        <div className="flex-1 overflow-y-auto py-6 px-3 space-y-2">
+        <div className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
           
           <button 
             onClick={() => { setActiveTab("dashboard"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "dashboard" ? "bg-blue-600 text-white shadow-md shadow-blue-900/20" : "text-slate-400 hover:bg-slate-800 hover:text-white"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "dashboard" ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
           >
-            <LayoutDashboard size={16} className={activeTab === "dashboard" ? "text-white" : "text-slate-500"} /> Dashboard
+            <LayoutDashboard size={18} className={activeTab === "dashboard" ? "text-white" : "text-slate-400"} /> Dashboard
           </button>
 
           <button 
             onClick={() => { setActiveTab("export"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "export" ? "bg-blue-600 text-white shadow-md shadow-blue-900/20" : "text-slate-400 hover:bg-slate-800 hover:text-white"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "export" ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
           >
-            <MessageSquare size={16} className={activeTab === "export" ? "text-white" : "text-slate-500"} /> Enquiries Inbox
+            <MessageSquare size={18} className={activeTab === "export" ? "text-white" : "text-slate-400"} /> Enquiries Inbox
           </button>
 
           <button 
             onClick={() => { setActiveTab("banners"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "banners" ? "bg-blue-600 text-white shadow-md shadow-blue-900/20" : "text-slate-400 hover:bg-slate-800 hover:text-white"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "banners" ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
           >
-            <Briefcase size={16} className={activeTab === "banners" ? "text-white" : "text-slate-500"} /> Banner Management
+            <Briefcase size={18} className={activeTab === "banners" ? "text-white" : "text-slate-400"} /> Banner Management
           </button>
 
         </div>
 
         {/* Bottom User */}
-        <div className="p-4 border-t border-slate-800/50">
-          <div className="flex items-center justify-between">
+        <div className="p-4 border-t border-slate-100">
+          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">AD</div>
+              <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center font-bold text-xs shadow-sm">AD</div>
               <div>
-                <div className="text-white text-sm font-bold leading-tight">Administrator</div>
-                <div className="text-slate-500 text-[10px]">Super Admin</div>
+                <div className="text-slate-900 text-sm font-bold leading-tight">Administrator</div>
+                <div className="text-slate-500 text-[10px] font-semibold tracking-wide uppercase mt-0.5">Super Admin</div>
               </div>
             </div>
-            <button onClick={onLogout} className="text-slate-400 hover:text-white flex items-center gap-1 text-xs transition-colors">
-              <LogOut size={14} /> Logout
+            <button onClick={onLogout} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Logout">
+              <LogOut size={16} />
             </button>
           </div>
         </div>
