@@ -293,7 +293,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
       <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200 z-20">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs">DS</div>
-          <span className="font-bold text-lg text-[#0B1121]">Admin Console</span>
+          <span className="font-bold text-lg text-[#0B1121]">Damini Admin</span>
         </div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -301,14 +301,14 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
       </div>
 
       {/* Sidebar */}
-      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-slate-50 border-r border-slate-200 md:h-screen flex flex-col z-40 transform transition-transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+      <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-blue-950 border-r border-blue-900/50 md:h-screen flex flex-col z-40 shadow-xl shadow-blue-900/10 transform transition-transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         {/* Header */}
-        <div className="p-5 flex items-center justify-between border-b border-slate-100">
+        <div className="p-5 flex items-center justify-between border-b border-blue-900/50">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-sm">DS</div>
-            <span className="font-bold text-sm text-slate-900 tracking-wide">ADMIN CONSOLE</span>
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-[0_2px_10px_rgba(37,99,235,0.4)]">DS</div>
+            <span className="font-bold text-sm text-white tracking-wide">DAMINI ADMIN</span>
           </div>
-          <button className="hidden md:flex w-6 h-6 rounded-md bg-slate-50 border border-slate-200 items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors">
+          <button className="hidden md:flex w-6 h-6 rounded-md bg-blue-900 border border-blue-800 items-center justify-center text-blue-300 hover:bg-blue-800 hover:text-white transition-colors">
             <ChevronLeft size={14} />
           </button>
         </div>
@@ -318,38 +318,47 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
           
           <button 
             onClick={() => { setActiveTab("dashboard"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "dashboard" ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "dashboard" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-blue-900/50 hover:text-white"}`}
           >
-            <LayoutDashboard size={18} className={activeTab === "dashboard" ? "text-white" : "text-slate-400"} /> Dashboard
+            <div className={`p-1.5 rounded-lg ${activeTab === "dashboard" ? "bg-white/20 text-white" : "bg-transparent text-blue-400"}`}>
+              <LayoutDashboard size={18} />
+            </div>
+            Dashboard
           </button>
 
           <button 
             onClick={() => { setActiveTab("export"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "export" ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "export" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-blue-900/50 hover:text-white"}`}
           >
-            <MessageSquare size={18} className={activeTab === "export" ? "text-white" : "text-slate-400"} /> Enquiries Inbox
+            <div className={`p-1.5 rounded-lg ${activeTab === "export" ? "bg-white/20 text-white" : "bg-transparent text-blue-400"}`}>
+              <MessageSquare size={18} />
+            </div>
+            Enquiries Inbox
           </button>
 
           <button 
             onClick={() => { setActiveTab("banners"); setIsMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "banners" ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-colors ${activeTab === "banners" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/50 border border-blue-500" : "text-blue-200 hover:bg-blue-900/50 hover:text-white"}`}
           >
-            <Briefcase size={18} className={activeTab === "banners" ? "text-white" : "text-slate-400"} /> Banner Management
+            <div className={`p-1.5 rounded-lg ${activeTab === "banners" ? "bg-white/20 text-white" : "bg-transparent text-blue-400"}`}>
+              <Briefcase size={18} />
+            </div>
+            Banner Management
           </button>
 
         </div>
 
         {/* Bottom User */}
-        <div className="p-4 border-t border-slate-100">
-          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors">
+        <div className="p-4 border-t border-blue-900/50">
+          <div className="flex items-center justify-between p-2 rounded-xl hover:bg-blue-900/50 transition-colors">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center font-bold text-xs shadow-sm">AD</div>
+              <div className="w-9 h-9 rounded-full bg-blue-900 text-white border border-blue-800 flex items-center justify-center font-bold text-xs shadow-sm">AD</div>
               <div>
-                <div className="text-slate-900 text-sm font-bold leading-tight">Administrator</div>
-                <div className="text-slate-500 text-[10px] font-semibold tracking-wide uppercase mt-0.5">Super Admin</div>
+                <div className="text-white text-sm font-bold leading-tight">Administrator</div>
+                <div className="text-blue-400 text-[10px] font-semibold tracking-wide uppercase mt-0.5">Super Admin</div>
               </div>
             </div>
-            <button onClick={onLogout} className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Logout">
+            <button onClick={onLogout} className="w-8 h-8 rounded-full flex items-center justify-center text-blue-400 hover:text-red-400 hover:bg-red-500/20 transition-colors" title="Logout">
               <LogOut size={16} />
             </button>
           </div>
@@ -368,7 +377,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
             <div>
               <h1 className="text-xl font-bold text-slate-900">{activeTab === "dashboard" ? "Dashboard" : activeTab === "export" ? "Enquiries Inbox" : "Banner Management"}</h1>
               <div className="text-xs text-slate-500 font-medium flex items-center gap-1">
-                Admin Console <ChevronLeft className="rotate-180" size={10} /> {activeTab === "dashboard" ? "Dashboard" : activeTab === "export" ? "Enquiries Inbox" : "Banner Management"}
+                Damini Admin <ChevronLeft className="rotate-180" size={10} /> {activeTab === "dashboard" ? "Dashboard" : activeTab === "export" ? "Enquiries Inbox" : "Banner Management"}
               </div>
             </div>
           </div>
