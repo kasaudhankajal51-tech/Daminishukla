@@ -404,71 +404,91 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   
                   {/* Total Leads Card */}
-                  <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm relative overflow-hidden group">
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500" />
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                        <Users size={14} />
+                  <div className="bg-gradient-to-br from-blue-50/80 to-white rounded-[1.5rem] p-6 border border-blue-100/50 shadow-sm relative overflow-hidden group hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100 opacity-30 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-150 transition-transform duration-700" />
+                    
+                    <div className="absolute -right-4 -bottom-4 text-blue-600 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                      <Users size={140} />
+                    </div>
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-8">
+                        <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shadow-inner">
+                          <Users size={22} />
+                        </div>
+                        <span className="text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-full bg-blue-100/80 text-blue-700 border border-blue-200 shadow-sm">All time</span>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">All time</span>
+                      <div>
+                        <h3 className="text-4xl font-bold text-slate-800 tracking-tight mb-1">{enquiries.length}</h3>
+                        <p className="text-sm font-medium text-slate-500">Total Enquiries</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-slate-900">{enquiries.length}</h3>
-                      <p className="text-xs font-medium text-slate-500 mt-1">Total Enquiries</p>
-                    </div>
-                    <div className="mt-4 h-0.5 w-1/3 bg-blue-500 rounded-full" />
                   </div>
 
                   {/* Astrology Leads Card */}
-                  <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm relative overflow-hidden group">
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500" />
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-8 h-8 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center">
-                        <Star size={14} />
+                  <div className="bg-gradient-to-br from-orange-50/80 to-white rounded-[1.5rem] p-6 border border-orange-100/50 shadow-sm relative overflow-hidden group hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100 opacity-30 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-150 transition-transform duration-700" />
+                    
+                    <div className="absolute -right-4 -bottom-4 text-orange-600 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                      <Star size={140} />
+                    </div>
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-8">
+                        <div className="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center shadow-inner">
+                          <Star size={22} />
+                        </div>
+                        <span className="text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-full bg-orange-100/80 text-orange-700 border border-orange-200 shadow-sm">Active</span>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Active</span>
+                      <div>
+                        <h3 className="text-4xl font-bold text-slate-800 tracking-tight mb-1">{enquiries.filter(e => (e.enquiry_type || e.enquiryType || '').toLowerCase().includes('astrology')).length}</h3>
+                        <p className="text-sm font-medium text-slate-500">Astrology Queries</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-slate-900">{enquiries.filter(e => (e.enquiry_type || e.enquiryType || '').toLowerCase().includes('astrology')).length}</h3>
-                      <p className="text-xs font-medium text-slate-500 mt-1">Astrology Queries</p>
-                    </div>
-                    <div className="mt-4 h-0.5 w-1/3 bg-orange-500 rounded-full" />
                   </div>
 
                   {/* Creator Leads Card */}
-                  <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm relative overflow-hidden group">
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-500" />
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center">
-                        <Video size={14} />
+                  <div className="bg-gradient-to-br from-purple-50/80 to-white rounded-[1.5rem] p-6 border border-purple-100/50 shadow-sm relative overflow-hidden group hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-100 opacity-30 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-150 transition-transform duration-700" />
+                    
+                    <div className="absolute -right-4 -bottom-4 text-purple-600 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                      <Video size={140} />
+                    </div>
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-8">
+                        <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center shadow-inner">
+                          <Video size={22} />
+                        </div>
+                        <span className="text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-full bg-purple-100/80 text-purple-700 border border-purple-200 shadow-sm">Active</span>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Active</span>
+                      <div>
+                        <h3 className="text-4xl font-bold text-slate-800 tracking-tight mb-1">{enquiries.filter(e => (e.enquiry_type || e.enquiryType || '').toLowerCase().includes('creator')).length}</h3>
+                        <p className="text-sm font-medium text-slate-500">Creator Enquiries</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-slate-900">{enquiries.filter(e => (e.enquiry_type || e.enquiryType || '').toLowerCase().includes('creator')).length}</h3>
-                      <p className="text-xs font-medium text-slate-500 mt-1">Creator Enquiries</p>
-                    </div>
-                    <div className="mt-4 h-0.5 w-1/3 bg-purple-500 rounded-full" />
                   </div>
 
                   {/* Today's Leads Card */}
-                  <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm relative overflow-hidden group">
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500" />
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                        <Activity size={14} />
+                  <div className="bg-gradient-to-br from-emerald-50/80 to-white rounded-[1.5rem] p-6 border border-emerald-100/50 shadow-sm relative overflow-hidden group hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-100 opacity-30 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:scale-150 transition-transform duration-700" />
+                    
+                    <div className="absolute -right-4 -bottom-4 text-emerald-600 opacity-[0.03] transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+                      <Activity size={140} />
+                    </div>
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-8">
+                        <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner">
+                          <Activity size={22} />
+                        </div>
+                        <span className="text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-full bg-emerald-100/80 text-emerald-700 border border-emerald-200 shadow-sm">Today</span>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">Today</span>
+                      <div>
+                        <h3 className="text-4xl font-bold text-slate-800 tracking-tight mb-1">{enquiries.filter(e => {
+                            const date = new Date(e.created_at || e.createdAt || new Date());
+                            const today = new Date();
+                            return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
+                          }).length}</h3>
+                        <p className="text-sm font-medium text-slate-500">New Leads Today</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-slate-900">{enquiries.filter(e => {
-                          const date = new Date(e.created_at || e.createdAt || new Date());
-                          const today = new Date();
-                          return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
-                        }).length}</h3>
-                      <p className="text-xs font-medium text-slate-500 mt-1">New Leads Today</p>
-                    </div>
-                    <div className="mt-4 h-0.5 w-1/3 bg-emerald-500 rounded-full" />
                   </div>
 
                 </div>
