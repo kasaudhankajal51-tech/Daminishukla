@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, memo } from "react";
 import Image from "next/image";
-import { Download, Upload, LogOut, Settings, Image as ImageIcon, Menu, X, Calendar, Mail, Phone } from "lucide-react";
+import { Download, Upload, LogOut, Settings, Image as ImageIcon, Menu, X, Calendar, Mail, Phone, Lock, Eye } from "lucide-react";
 
 export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean }) {
   const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
@@ -68,65 +68,113 @@ export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean 
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center font-inter p-4 relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 sm:p-8 font-inter relative">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/10 blur-[100px] pointer-events-none" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-400/10 blur-[100px] pointer-events-none" />
         
-        <div className="bg-white/80 backdrop-blur-xl p-8 md:p-12 rounded-[2rem] border border-white/50 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] w-full max-w-md relative z-10 transition-all duration-500">
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 rounded-t-[2rem]" />
-
-          <div className="text-center mb-10">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white shadow-inner relative group cursor-pointer hover:scale-105 transition-transform duration-300">
-              <Settings className="text-blue-600 group-hover:rotate-90 transition-transform duration-700 ease-in-out" size={36} />
-              <div className="absolute inset-0 rounded-2xl bg-blue-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+        <div className="w-full max-w-[1050px] bg-white rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col lg:flex-row min-h-[650px] relative z-10">
+          
+          {/* Left Side: Form */}
+          <div className="w-full lg:w-1/2 p-8 md:p-14 lg:p-16 flex flex-col justify-center relative">
+            
+            {/* Header: Logo & Title */}
+            <div className="flex items-center gap-4 mb-14">
+              <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-sm w-12 h-12 rounded-full">
+                <Settings className="text-blue-600" size={20} />
+              </div>
+              <div className="w-px h-6 bg-slate-200" />
+              <span className="text-blue-600 font-bold tracking-[0.2em] text-xs uppercase">Damini Admin</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold font-outfit text-slate-900 mb-3 tracking-tight">Admin Portal</h1>
-            <p className="text-slate-500 font-medium">Secure access to your dashboard</p>
+
+            {/* Title */}
+            <div className="mb-12">
+              <h1 className="text-4xl lg:text-[2.5rem] font-bold font-outfit text-slate-900 mb-3 tracking-tight">Welcome back!</h1>
+              <p className="text-slate-500 font-medium text-[15px]">Securely sign in to manage your platform.</p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold text-slate-700 tracking-wider uppercase ml-1 block mb-1">Username</label>
+                <div className="relative flex items-center">
+                  <Mail className="absolute left-4 text-slate-400" size={18} />
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full bg-white border-2 border-slate-200 rounded-2xl pl-12 pr-5 py-4 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium placeholder:text-slate-400"
+                    placeholder="Enter your username"
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold text-slate-700 tracking-wider uppercase ml-1 block mb-1">Password</label>
+                <div className="relative flex items-center">
+                  <Lock className="absolute left-4 text-slate-400" size={18} />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full bg-white border-2 border-slate-200 rounded-2xl pl-12 pr-12 py-4 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium placeholder:text-slate-400"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button type="button" className="absolute right-4 text-slate-400 hover:text-blue-500 transition-colors">
+                    <Eye size={18} />
+                  </button>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    disabled={isForgotLoading}
+                    className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors disabled:opacity-50"
+                  >
+                    {isForgotLoading ? "Sending..." : "Forgot Password?"}
+                  </button>
+                </div>
+              </div>
+              
+              {loginError && <div className="text-red-600 text-sm font-semibold">{loginError}</div>}
+              {forgotMessage && <div className="text-blue-700 text-sm font-semibold">{forgotMessage}</div>}
+              
+              <button
+                type="submit"
+                className="w-full py-4 mt-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-[17px] shadow-lg active:scale-[0.98] transition-all"
+              >
+                Sign In
+              </button>
+            </form>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700 ml-1">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-slate-50/50 border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium placeholder:text-slate-400"
-                placeholder="Enter your username"
-                required
-              />
+          {/* Right Side: Image */}
+          <div className="hidden lg:block lg:w-1/2 relative bg-slate-900">
+            <Image 
+              src="/admin-hero.png" 
+              alt="Creator and Astrology Dashboard Background" 
+              fill 
+              className="object-cover"
+              priority
+            />
+            {/* Gradient overlay for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/10 to-black/80 pointer-events-none" />
+            
+            <div className="absolute top-12 left-12 right-12 text-white z-10">
+              <span className="text-cyan-400 font-bold tracking-[0.15em] text-sm uppercase mb-4 block">Damini Workspace</span>
+              <h2 className="text-4xl font-outfit font-bold leading-tight tracking-wide text-white drop-shadow-lg">
+                Manage creators,<br />astrology queries<br />& content
+              </h2>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between items-end mb-2">
-                <label className="text-sm font-bold text-slate-700 ml-1">Password</label>
-                <button
-                  type="button"
-                  onClick={handleForgotPassword}
-                  disabled={isForgotLoading}
-                  className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors disabled:opacity-50 hover:underline underline-offset-4"
-                >
-                  {isForgotLoading ? "Sending..." : "Forgot?"}
-                </button>
+
+            <div className="absolute bottom-10 left-12 z-10">
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md shadow-lg">
+                <Lock size={14} className="text-white" />
+                <span className="text-white text-sm font-bold tracking-wide">Authorized personnel only</span>
               </div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-50/50 border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium placeholder:text-slate-400"
-                placeholder="••••••••"
-                required
-              />
             </div>
-            {loginError && <div className="animate-in slide-in-from-top-1 fade-in duration-300 text-red-600 text-sm font-semibold text-center bg-red-50/80 backdrop-blur-sm p-3 rounded-xl border border-red-100">{loginError}</div>}
-            {forgotMessage && <div className="animate-in slide-in-from-top-1 fade-in duration-300 text-blue-700 text-sm font-semibold text-center bg-blue-50/80 backdrop-blur-sm p-3 rounded-xl border border-blue-100">{forgotMessage}</div>}
-            <button
-              type="submit"
-              className="w-full py-4 mt-2 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
-            >
-              Sign In
-              <div className="w-5 h-5 flex items-center justify-center group-hover:translate-x-1 transition-transform">→</div>
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     );
@@ -253,7 +301,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed md:static inset-y-0 left-0 w-72 md:w-72 bg-white border-r border-slate-200 md:h-screen flex flex-col z-40 transform transition-transform duration-300 ease-out shadow-2xl md:shadow-none ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+      <aside className={`fixed md:static inset-y-0 left-0 w-72 md:w-72 bg-gradient-to-b from-blue-50 to-sky-50/50 border-r border-blue-100 md:h-screen flex flex-col z-40 transform transition-transform duration-300 ease-out shadow-2xl md:shadow-none ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <div className="hidden md:flex p-6 border-b border-slate-100 items-center gap-3">
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2.5 rounded-xl border border-blue-100 shadow-sm group cursor-pointer hover:scale-105 transition-transform">
             <Settings className="text-blue-600 group-hover:rotate-90 transition-transform duration-700" size={22} />
@@ -273,23 +321,25 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
           <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-4">Dashboard</div>
           <button
             onClick={() => { setActiveTab("banners"); setIsMobileMenuOpen(false); }}
-            className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all text-left font-semibold group ${activeTab === "banners"
-              ? "bg-blue-50 text-blue-700 border border-blue-100 shadow-sm"
-              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent"
+            className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all text-left font-semibold group relative overflow-hidden ${activeTab === "banners"
+              ? "bg-white text-blue-700 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-blue-100/50"
+              : "text-slate-600 hover:bg-white/60 hover:text-slate-900 border border-transparent"
               }`}
           >
-            <Upload size={18} className={activeTab === "banners" ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600 transition-colors"} />
+            {activeTab === "banners" && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-blue-500 rounded-r-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" />}
+            <Upload size={18} className={activeTab === "banners" ? "text-blue-600" : "text-slate-400 group-hover:text-blue-500 transition-colors"} />
             Banner Management
           </button>
 
           <button
             onClick={() => { setActiveTab("export"); setIsMobileMenuOpen(false); }}
-            className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all text-left font-semibold group ${activeTab === "export"
-              ? "bg-blue-50 text-blue-700 border border-blue-100 shadow-sm"
-              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent"
+            className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all text-left font-semibold group relative overflow-hidden ${activeTab === "export"
+              ? "bg-white text-blue-700 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-blue-100/50"
+              : "text-slate-600 hover:bg-white/60 hover:text-slate-900 border border-transparent"
               }`}
           >
-            <Download size={18} className={activeTab === "export" ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600 transition-colors"} />
+            {activeTab === "export" && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-blue-500 rounded-r-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" />}
+            <Download size={18} className={activeTab === "export" ? "text-blue-600" : "text-slate-400 group-hover:text-blue-500 transition-colors"} />
             Export Enquiries
           </button>
         </div>
@@ -306,14 +356,18 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 md:p-8 lg:p-10 overflow-y-auto h-[calc(100vh-73px)] md:h-screen relative w-full bg-slate-50/50">
+      <main className="flex-1 p-4 md:p-8 lg:p-10 overflow-y-auto h-[calc(100vh-73px)] md:h-screen relative w-full bg-[#f8fafc]">
+        {/* Decorative background blobs */}
+        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-blue-400/10 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] rounded-full bg-indigo-400/10 blur-[120px] pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-white to-transparent pointer-events-none opacity-50" />
-        <div className="max-w-5xl mx-auto">
+        
+        <div className="max-w-5xl mx-auto relative z-10">
 
           {activeTab === "banners" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="mb-8">
-                <h2 className="text-3xl font-bold font-outfit text-slate-900">Banner Management</h2>
+                <h2 className="text-3xl md:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 tracking-tight pb-1">Banner Management</h2>
                 <p className="text-slate-500 font-medium mt-2">Upload and manage the hero banners for your pages.</p>
               </div>
 
@@ -321,8 +375,9 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                 <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-sky-400 to-indigo-500 group-hover:w-2 transition-all duration-300" />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div className="space-y-5 bg-slate-50/80 p-6 rounded-2xl border border-slate-100 flex flex-col hover:bg-white hover:shadow-lg transition-all duration-300 group/card">
-                    <h3 className="font-bold text-lg text-slate-800">Creator Page Banner</h3>
+                  <div className="space-y-5 bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/80 flex flex-col hover:bg-white hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-500 group/card relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-sky-400 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                    <h3 className="font-bold text-xl text-slate-800">Creator Page Banner</h3>
                     <p className="text-sm text-slate-500 font-medium">Upload a bright, light-themed background image for the Creator page hero section.</p>
 
                     <div className="w-full h-64 bg-slate-200 rounded-xl overflow-hidden relative border border-slate-300 my-2 flex items-center justify-center p-2">
@@ -358,8 +413,9 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                     {uploadStatus["creator"] && <span className="text-sm font-semibold text-sky-600 block mt-2">{uploadStatus["creator"]}</span>}
                   </div>
 
-                  <div className="space-y-5 bg-slate-50/80 p-6 rounded-2xl border border-slate-100 flex flex-col hover:bg-white hover:shadow-lg transition-all duration-300 group/card">
-                    <h3 className="font-bold text-lg text-slate-800">Astrologer Page Banner</h3>
+                  <div className="space-y-5 bg-white/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/80 flex flex-col hover:bg-white hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-all duration-500 group/card relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+                    <h3 className="font-bold text-xl text-slate-800">Astrologer Page Banner</h3>
                     <p className="text-sm text-slate-500 font-medium">Upload a mystical, light-themed background image for the Astrologer page hero section.</p>
 
                     <div className="w-full h-64 bg-slate-200 rounded-xl overflow-hidden relative border border-slate-300 my-2 flex items-center justify-center p-2">
@@ -402,30 +458,30 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
           {activeTab === "export" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="mb-8">
-                <h2 className="text-3xl font-bold font-outfit text-slate-900">Export Enquiries</h2>
+                <h2 className="text-3xl md:text-4xl font-bold font-outfit text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-600 tracking-tight pb-1">Export Enquiries</h2>
                 <p className="text-slate-500 font-medium mt-2">Download all brand enquiries or filter by a specific date range.</p>
               </div>
 
-              <section className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-green-400 to-emerald-500" />
+              <section className="bg-white/80 backdrop-blur-xl border border-white/80 rounded-[2rem] p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group">
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-green-400 to-emerald-500 group-hover:w-2 transition-all duration-300" />
 
-                <div className="flex flex-col md:flex-row items-end gap-6 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                <div className="flex flex-col md:flex-row items-end gap-6 bg-slate-50/50 p-6 rounded-2xl border border-slate-100/50">
                   <div className="flex-1 space-y-2 w-full">
-                    <label className="text-sm font-semibold text-slate-700 ml-1">From Date</label>
+                    <label className="text-sm font-bold text-slate-700 ml-1">From Date</label>
                     <input
                       type="date"
                       value={dateFrom}
                       onChange={(e) => setDateFrom(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-400 transition-all font-medium"
+                      className="w-full bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all font-medium hover:border-green-300"
                     />
                   </div>
                   <div className="flex-1 space-y-2 w-full">
-                    <label className="text-sm font-semibold text-slate-700 ml-1">To Date</label>
+                    <label className="text-sm font-bold text-slate-700 ml-1">To Date</label>
                     <input
                       type="date"
                       value={dateTo}
                       onChange={(e) => setDateTo(e.target.value)}
-                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-green-100 focus:border-green-400 transition-all font-medium"
+                      className="w-full bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-500 transition-all font-medium hover:border-green-300"
                     />
                   </div>
                   <button
@@ -504,9 +560,9 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                             <th className="p-5 min-w-[350px]">Message</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100 text-sm font-medium">
+                        <tbody className="divide-y divide-slate-100 text-sm font-medium relative bg-transparent">
                           {enquiries.map((enq, i) => (
-                            <tr key={enq._id || i} className="hover:bg-slate-50/80 transition-colors group">
+                            <tr key={enq._id || i} className="hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 group relative z-0 hover:z-10">
                               <td className="p-5 whitespace-nowrap text-slate-500">
                                 <div className="flex items-center gap-2">
                                   <Calendar size={14} className="text-slate-400 group-hover:text-blue-400 transition-colors" />
