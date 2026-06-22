@@ -38,40 +38,24 @@ const TRUSTED_CREDENTIALS = [
 export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
   const dsAstrologyUrl = "https://dsastrology.com";
   const [mounted, setMounted] = useState(false);
-
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    enquiryType: "Birth Chart Reading - Astrology",
-    message: ""
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
-
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const res = await fetch("/api/enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
-      if (res.ok) {
-        setSubmitStatus("success");
-        setFormData({ fullName: "", email: "", phone: "", enquiryType: "Birth Chart Reading - Astrology", message: "" });
-      } else {
-        setSubmitStatus("error");
-      }
-    } catch (err) {
-      setSubmitStatus("error");
-    }
-    setIsSubmitting(false);
-  }, [formData]);
+  const [instagramPosts, setInstagramPosts] = useState<any[]>([]);
+  const [isLoadingInsta, setIsLoadingInsta] = useState(true);
 
   useEffect(() => {
     setMounted(true);
+
+    const fetchInsta = async () => {
+      try {
+        const res = await fetch("/api/instagram");
+        const json = await res.json();
+        if (json.success) setInstagramPosts(json.data);
+      } catch (err) {
+        console.error("Failed to fetch Instagram posts", err);
+      } finally {
+        setIsLoadingInsta(false);
+      }
+    };
+    fetchInsta();
   }, []);
 
   return (
@@ -151,12 +135,14 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
               Book a Consultation
               <ArrowRight size={20} />
             </a>
-            <button 
-              onClick={() => document.getElementById("astro-enquiry-form")?.scrollIntoView({ behavior: "smooth" })}
+            <a 
+              href={dsAstrologyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-800 font-semibold text-lg hover:bg-slate-50 hover:shadow-md transition-all"
             >
               Request Reading
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -260,110 +246,63 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
         </div>
       </section>
 
-      {/* Enquiry Form */}
-      <section id="astro-enquiry-form" className="max-w-4xl mx-auto px-4 py-24">
-        <div className="bg-white rounded-3xl p-8 md:p-12 border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.04)] relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 to-blue-500" />
-          
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">Request a Reading</h2>
-            <p className="text-slate-500 font-medium">Fill out the form below to book a consultation or enquire about services.</p>
+      {/* Live Instagram Feed */}
+      <section className="max-w-6xl mx-auto px-4 py-20">
+        <div className="flex items-center justify-center gap-3 mb-12">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-pink-500/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
           </div>
-
-          {submitStatus === "success" ? (
-            <div className="bg-green-50 border border-green-200 text-green-800 p-8 rounded-2xl text-center shadow-sm">
-              <h3 className="text-2xl font-bold mb-3 font-outfit">Request Sent Successfully!</h3>
-              <p className="text-green-700">Thank you for reaching out. We will get back to you shortly.</p>
-              <button 
-                onClick={() => setSubmitStatus("idle")}
-                className="mt-8 px-8 py-3 bg-white border border-green-200 text-green-700 font-semibold hover:bg-green-50 rounded-full transition-colors shadow-sm"
-              >
-                Send Another Request
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Full Name *</label>
-                  <input 
-                    required 
-                    type="text" 
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all placeholder:text-slate-400 font-medium"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Email Address *</label>
-                  <input 
-                    required 
-                    type="email" 
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all placeholder:text-slate-400 font-medium"
-                    placeholder="john@company.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Phone Number</label>
-                  <input 
-                    type="tel" 
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all placeholder:text-slate-400 font-medium"
-                    placeholder="+1 (555) 000-0000"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Service Type *</label>
-                  <select 
-                    required
-                    value={formData.enquiryType}
-                    onChange={(e) => setFormData({...formData, enquiryType: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all font-medium appearance-none cursor-pointer"
-                  >
-                    <option value="Birth Chart Reading - Astrology">Birth Chart Reading</option>
-                    <option value="Predictive Astrology - Astrology">Predictive Astrology</option>
-                    <option value="Kundali Milan - Astrology">Kundali Milan</option>
-                    <option value="Astro Courses - Astrology">Astro Courses</option>
-                    <option value="Other - Astrology">Other</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-slate-700 ml-1">Message *</label>
-                <textarea 
-                  required 
-                  rows={5}
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all resize-none placeholder:text-slate-400 font-medium"
-                  placeholder="Tell us about your requirements or questions..."
-                ></textarea>
-              </div>
-
-              {submitStatus === "error" && (
-                <div className="text-red-500 text-sm font-medium text-center bg-red-50 p-3 rounded-lg">
-                  Something went wrong. Please try again later.
-                </div>
-              )}
-
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-bold text-lg shadow-[0_4px_15px_rgba(79,70,229,0.3)] hover:shadow-[0_6px_25px_rgba(79,70,229,0.4)] hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-              >
-                {isSubmitting ? "Sending Request..." : "Submit Request"}
-              </button>
-            </form>
-          )}
+          <h2 className="text-3xl md:text-5xl font-bold font-outfit text-slate-900">Latest Astro Reels</h2>
         </div>
+
+        {isLoadingInsta ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="animate-pulse bg-white rounded-[24px] overflow-hidden border border-slate-100 h-72 shadow-sm" />
+            ))}
+          </div>
+        ) : instagramPosts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {instagramPosts.map(post => (
+              <a 
+                key={post.id} 
+                href={post.permalink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(79,70,229,0.15)] transition-all duration-300 transform hover:-translate-y-1 flex flex-col"
+              >
+                <div className="relative aspect-square w-full overflow-hidden shrink-0 bg-slate-100">
+                  {post.mediaUrl ? (
+                    <img src={post.mediaUrl} alt="Instagram post" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate-400">No Image</div>
+                  )}
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+                  {post.mediaType === "VIDEO" && (
+                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </div>
+                  )}
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <p className="text-sm text-slate-700 line-clamp-3 mb-3 leading-snug">{post.caption || "View post on Instagram"}</p>
+                  <div className="mt-auto flex items-center text-xs text-slate-500 font-semibold gap-2">
+                    <span className="flex items-center gap-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      View
+                    </span>
+                    <span className="text-slate-300">•</span>
+                    <span>{new Date(post.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 bg-white rounded-[24px] border border-slate-100 shadow-sm">
+            <p className="text-slate-500 font-medium">New reels coming soon.</p>
+          </div>
+        )}
       </section>
 
       {/* Final CTA Block */}

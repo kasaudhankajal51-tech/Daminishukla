@@ -28,6 +28,9 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
   const [youtubeVideos, setYoutubeVideos] = useState<any[]>([]);
   const [isLoadingVideos, setIsLoadingVideos] = useState(true);
 
+  const [instagramPosts, setInstagramPosts] = useState<any[]>([]);
+  const [isLoadingInsta, setIsLoadingInsta] = useState(true);
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -40,7 +43,21 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
         setIsLoadingVideos(false);
       }
     };
+
+    const fetchInsta = async () => {
+      try {
+        const res = await fetch("/api/instagram");
+        const json = await res.json();
+        if (json.success) setInstagramPosts(json.data);
+      } catch (err) {
+        console.error("Failed to fetch Instagram posts", err);
+      } finally {
+        setIsLoadingInsta(false);
+      }
+    };
+
     fetchVideos();
+    fetchInsta();
   }, []);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
@@ -287,6 +304,62 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
           ) : (
             <div className="text-center py-12 bg-white rounded-[24px] border border-slate-100 shadow-sm">
               <p className="text-slate-500 font-medium">New videos coming soon.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Live Instagram Feed */}
+        <div className="mt-16">
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-pink-500/30">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold font-outfit text-slate-900">Latest from Instagram</h3>
+          </div>
+
+          {isLoadingInsta ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="animate-pulse bg-white rounded-[24px] overflow-hidden border border-slate-100 h-72 shadow-sm" />
+              ))}
+            </div>
+          ) : instagramPosts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {instagramPosts.map(post => (
+                <a 
+                  key={post.id} 
+                  href={post.permalink} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group relative bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgba(236,72,153,0.15)] transition-all duration-300 transform hover:-translate-y-1 flex flex-col"
+                >
+                  <div className="relative aspect-square w-full overflow-hidden shrink-0 bg-slate-100">
+                    {post.mediaUrl ? (
+                      <img src={post.mediaUrl} alt="Instagram post" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-slate-400">No Image</div>
+                    )}
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+                    {post.mediaType === "VIDEO" && (
+                      <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white">
+                        <Play size={14} fill="currentColor" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6 flex flex-col flex-1">
+                    <p className="text-sm text-slate-700 line-clamp-3 mb-3 leading-snug">{post.caption || "View post on Instagram"}</p>
+                    <div className="mt-auto flex items-center text-xs text-slate-500 font-semibold gap-2">
+                      <span className="flex items-center gap-1"><Eye size={14} /> View</span>
+                      <span className="text-slate-300">•</span>
+                      <span>{new Date(post.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 bg-white rounded-[24px] border border-slate-100 shadow-sm">
+              <p className="text-slate-500 font-medium">New posts coming soon.</p>
             </div>
           )}
         </div>
