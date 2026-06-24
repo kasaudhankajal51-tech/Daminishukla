@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Moon, Star, Sun, Compass, BookOpen, Heart, Briefcase, GraduationCap, ArrowRight } from "lucide-react";
+import { Moon, Star, Sun, Compass, BookOpen, Heart, Briefcase, GraduationCap, ArrowRight, Home } from "lucide-react";
+import Link from "next/link";
 import React, { useState, useEffect, useCallback, memo } from "react";
 
 const ZODIAC_SIGNS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
@@ -60,9 +61,20 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-indigo-200 selection:text-indigo-900 pb-20">
-      
+
+      {/* Top Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 text-slate-700 font-semibold text-sm shadow-md hover:shadow-lg hover:border-indigo-300 hover:text-indigo-600 transition-all"
+        >
+          <Home size={16} />
+          Home
+        </Link>
+      </nav>
+
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] py-24 w-full flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[80vh] pt-32 pb-24 w-full flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('${bannerUrl}')` }}

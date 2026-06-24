@@ -141,7 +141,7 @@ export default function Home() {
 
       {/* Cards Section */}
       <section className="relative z-10 w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-12 pb-32 perspective-[2000px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
 
           {/* Creator Tilt Card */}
           <TiltCard
@@ -178,7 +178,7 @@ export default function Home() {
           {/* Astrologer Tilt Card */}
           <TiltCard
             delay={0.4}
-            className="group relative h-[420px] sm:h-[500px] md:h-[600px] lg:h-[700px] w-full cursor-pointer mt-6 md:mt-24 z-10 hover:z-50"
+            className="group relative h-[420px] sm:h-[500px] md:h-[600px] lg:h-[700px] w-full cursor-pointer z-10 hover:z-50"
           >
             <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(155,127,234,0.4)] group-hover:border-[#9B7FEA]/50">
               <div className="absolute inset-0 bg-[#04020A]" />
