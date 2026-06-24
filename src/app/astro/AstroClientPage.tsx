@@ -37,7 +37,7 @@ const TRUSTED_CREDENTIALS = [
 ];
 
 export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
-  const dsAstrologyUrl = "https://dsastrology.com";
+  const dsAstrologyUrl = "https://www.dsastrology.com/";
   const [mounted, setMounted] = useState(false);
   const [instagramPosts, setInstagramPosts] = useState<any[]>([]);
   const [isLoadingInsta, setIsLoadingInsta] = useState(true);
