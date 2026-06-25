@@ -6,6 +6,9 @@ if (!process.env.MONGODB_URI) {
 
 const uri = process.env.MONGODB_URI;
 const options = {
+  autoSelectFamily: true,
+  maxIdleTimeMS: 30000, // Close idle connections after 30 seconds
+  maxPoolSize: 10,      // Limit pool size in dev/prod to prevent leaks
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,

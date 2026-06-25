@@ -13,7 +13,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ page: st
       // Fallback
       return NextResponse.json({ url: `/${resolvedParams.page}-bg.png` });
     }
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch banner" }, { status: 500 });
+  } catch (error: any) {
+    console.error("Fetch Banner Error:", error);
+    return NextResponse.json({ error: "Failed to fetch banner", details: error?.message || String(error), stack: error?.stack }, { status: 500 });
   }
 }
