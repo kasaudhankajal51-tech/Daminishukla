@@ -187,9 +187,9 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
   }, []);
 
   const MOCK_REELS = [
-    { id: "mock1", title: "Saturn Transit Lessons", permalink: dsAstrologyUrl, caption: "Understanding your Saturn Return: Cosmic lessons & spiritual growth.", views: "12.4K" },
-    { id: "mock2", title: "Moon & Emotional Alignment", permalink: dsAstrologyUrl, caption: "How the Moon influences your daily emotions and mood swings.", views: "8.9K" },
-    { id: "mock3", title: "Jupiter in the 9th House", permalink: dsAstrologyUrl, caption: "Jupiter Transit Guidance: Luck, wisdom, and cosmic expansion.", views: "15.1K" }
+    { id: "mock1", title: "Saturn Transit Lessons", permalink: dsAstrologyUrl, thumbnail: "/saturn_transit_reels.png", caption: "Understanding your Saturn Return: Cosmic lessons & spiritual growth.", views: "12.4K" },
+    { id: "mock2", title: "Moon & Emotional Alignment", permalink: dsAstrologyUrl, thumbnail: "/moon_alignment_reels.png", caption: "How the Moon influences your daily emotions and mood swings.", views: "8.9K" },
+    { id: "mock3", title: "Jupiter in the 9th House", permalink: dsAstrologyUrl, thumbnail: "/jupiter_house_reels.png", caption: "Jupiter Transit Guidance: Luck, wisdom, and cosmic expansion.", views: "15.1K" }
   ];
 
   return (
@@ -720,17 +720,18 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
                 transition={{ duration: 0.5, delay: i * 0.15 }}
                 className="group relative bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)] transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
               >
-                {/* Cosmic reel background placeholder */}
-                <div className="relative aspect-square w-full overflow-hidden shrink-0 bg-gradient-to-tr from-indigo-950 via-indigo-900 to-blue-900 flex flex-col items-center justify-center p-6 text-center text-white">
-                  <div className="absolute inset-0 bg-black/20 group-hover:opacity-30 transition-opacity" />
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.15),transparent)]" />
+                {/* Cosmic reel background image with overlays */}
+                <div className="relative aspect-square w-full overflow-hidden shrink-0 bg-slate-100">
+                  <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-black/35 group-hover:opacity-90 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.25),transparent_60%)]" />
                   
-                  <div className="relative z-10 flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform">
+                  <div className="relative z-10 flex flex-col items-center justify-center h-full p-6 text-center text-white">
+                    <div className="w-12 h-12 rounded-full bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white mb-3 group-hover:scale-110 transition-transform">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     </div>
-                    <Sparkles className="w-5 h-5 text-indigo-400 mb-2 animate-pulse" />
-                    <p className="font-outfit font-semibold text-sm md:text-base leading-snug px-4">
+                    <Sparkles className="w-5 h-5 text-indigo-300 mb-1.5 animate-pulse" />
+                    <p className="font-outfit font-semibold text-sm md:text-base leading-snug px-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
                       {post.title}
                     </p>
                   </div>
