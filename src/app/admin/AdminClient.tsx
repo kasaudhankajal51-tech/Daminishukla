@@ -504,7 +504,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                   
                   <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
                     <div className="overflow-x-auto">
-                      <table className="w-full text-left border-collapse text-sm">
+                      <table className="min-w-full text-left border-collapse text-sm">
                         <thead>
                           <tr className="bg-slate-50/50 border-b border-slate-200 text-slate-500 font-bold text-[10px] uppercase tracking-widest">
                             <th className="p-4 pl-6 whitespace-nowrap">Submitted</th>
@@ -571,7 +571,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                   <select 
                     value={sortOrder}
                     onChange={(e) => setSortOrder(e.target.value)}
-                    className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
+                    className="w-full lg:flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
                   >
                     <option>Newest → Oldest</option>
                     <option>Oldest → Newest</option>
@@ -580,31 +580,37 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                   <select 
                     value={filterType}
                     onChange={(e) => setFilterType(e.target.value)}
-                    className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
+                    className="w-full lg:flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
                   >
                     <option value="All">All Payments / Categories</option>
                     <option value="Astrology">Astrology</option>
                     <option value="Creator">Creator</option>
                   </select>
 
-                  <input 
-                    type="date"
-                    value={dateFrom}
-                    onChange={(e) => setDateFrom(e.target.value)}
-                    className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
-                  />
+                  <div className="w-full lg:flex-1 relative">
+                    <span className="absolute left-4 top-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-wider">From Date</span>
+                    <input 
+                      type="date"
+                      value={dateFrom}
+                      onChange={(e) => setDateFrom(e.target.value)}
+                      className="w-full bg-white border border-slate-200 rounded-xl pl-4 pr-4 pt-5 pb-1.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
+                    />
+                  </div>
 
-                  <input 
-                    type="date"
-                    value={dateTo}
-                    onChange={(e) => setDateTo(e.target.value)}
-                    className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
-                  />
+                  <div className="w-full lg:flex-1 relative">
+                    <span className="absolute left-4 top-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-wider">To Date</span>
+                    <input 
+                      type="date"
+                      value={dateTo}
+                      onChange={(e) => setDateTo(e.target.value)}
+                      className="w-full bg-white border border-slate-200 rounded-xl pl-4 pr-4 pt-5 pb-1.5 text-slate-700 text-sm focus:outline-none shadow-sm transition-colors"
+                    />
+                  </div>
 
                   <button 
                     onClick={handleExport}
                     disabled={isExporting}
-                    className="px-6 py-3.5 bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold rounded-xl flex items-center justify-center gap-2 text-sm shadow-sm transition-colors disabled:opacity-50"
+                    className="w-full lg:w-auto px-6 py-3.5 bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold rounded-xl flex items-center justify-center gap-2 text-sm shadow-sm transition-colors disabled:opacity-50"
                   >
                     <Download size={16} /> Excel 
                   </button>
@@ -623,7 +629,7 @@ const AdminDashboard = memo(({ onLogout }: { onLogout: () => void }) => {
                   </div>
 
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse text-sm">
+                    <table className="min-w-full text-left border-collapse text-sm">
                       <thead>
                         <tr className="bg-slate-50/50 border-b border-slate-200 text-slate-500 font-bold text-[10px] uppercase tracking-widest">
                           <th className="p-4 pl-6 whitespace-nowrap">Submitted On</th>
