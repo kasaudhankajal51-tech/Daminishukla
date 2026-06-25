@@ -154,6 +154,10 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
   const [isLoadingInsta, setIsLoadingInsta] = useState(true);
   const [selectedZodiac, setSelectedZodiac] = useState<number>(0);
   const [particles, setParticles] = useState<Particle[]>([]);
+  
+  // Spotlight Hover states
+  const [spotlightCoords, setSpotlightCoords] = useState({ x: 0, y: 0 });
+  const [isSpotlightHovered, setIsSpotlightHovered] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -220,6 +224,30 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
           animation-delay: var(--float-delay);
           left: var(--float-left);
           will-change: transform, opacity;
+        }
+        @keyframes float-gentle {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-8px) rotate(8deg); }
+        }
+        .animate-float-slow {
+          animation: float-gentle 5s ease-in-out infinite;
+        }
+        .animate-float-slow-delay {
+          animation: float-gentle 7s ease-in-out infinite;
+          animation-delay: 1.5s;
+        }
+        @keyframes shooting-star {
+          0% { transform: translate(-100px, -100px) rotate(-45deg) scale(0); opacity: 0; }
+          1% { opacity: 0.8; }
+          10% { transform: translate(300px, 300px) rotate(-45deg) scale(1); opacity: 0; }
+          100% { transform: translate(300px, 300px) rotate(-45deg) scale(0); opacity: 0; }
+        }
+        .animate-shooting-star {
+          animation: shooting-star 10s ease-in-out infinite;
+        }
+        .animate-shooting-star-delayed {
+          animation: shooting-star 14s ease-in-out infinite;
+          animation-delay: 5s;
         }
         .scrollbar-none::-webkit-scrollbar {
           display: none;
@@ -716,7 +744,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                       {post.views} Views
                     </span>
-                    <span className="text-slate-300">•</span>
+                  <span className="text-slate-300">•</span>
                     <span>Vedic Guidance</span>
                   </div>
                 </div>
@@ -727,22 +755,103 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
       </section>
 
       {/* Final CTA Block */}
-      <section className="py-24 px-4 text-center relative overflow-hidden">
-        <SacredGeometryBackground />
+      <section className="py-28 px-4 relative overflow-hidden bg-slate-50 flex justify-center items-center">
+        {/* Cosmic Background Effects (Theme Matched) */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.06),transparent_70%)]" />
         
-        <div className="relative z-10">
-          <h2 className="text-2xl md:text-4xl font-bold font-outfit text-slate-900 mb-6">Ready to decode your destiny?</h2>
-          <p className="text-slate-600 mb-10 max-w-2xl mx-auto text-lg">Take the first step towards cosmic alignment and profound self-discovery.</p>
-          <motion.a 
-            href={dsAstrologyUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            whileHover={{ scale: 1.03 }}
-            className="inline-flex items-center justify-center gap-2 px-10 py-5 rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-bold text-xl shadow-[0_4px_20px_rgba(79,70,229,0.3)] hover:shadow-[0_6px_25px_rgba(79,70,229,0.5)] hover:-translate-y-1 transition-all"
+        {/* Shimmering stars in background */}
+        <div className="absolute inset-0 opacity-40 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 bg-indigo-400 rounded-full animate-ping" />
+          <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-pulse" />
+          <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-indigo-300 rounded-full opacity-50" />
+          <div className="absolute bottom-1/3 right-1/3 w-1.5 h-1.5 bg-sky-400 rounded-full opacity-70 animate-ping" />
+          <div className="absolute top-1/2 left-1/5 w-1 h-1 bg-indigo-400 rounded-full opacity-30" />
+          <div className="absolute bottom-1/5 right-1/5 w-1.5 h-1.5 bg-purple-400 rounded-full opacity-40" />
+        </div>
+
+        {/* Outer Sacred Geometry watermark overlayed on background */}
+        <div className="absolute inset-0 opacity-[0.04] flex items-center justify-center pointer-events-none scale-120">
+          <SacredGeometryBackground />
+        </div>
+
+        {/* Stacked Cards Container */}
+        <div className="relative max-w-5xl w-full flex justify-center items-center">
+          {/* Stacked Layer 1 (Left Tilt) */}
+          <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-b from-indigo-50/50 to-purple-50/50 border border-indigo-100/70 -rotate-2 scale-[0.98] shadow-sm pointer-events-none transition-transform duration-500" />
+          
+          {/* Stacked Layer 2 (Right Tilt) */}
+          <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-b from-blue-50/40 to-slate-50/40 border border-blue-100/50 rotate-1 scale-[0.99] shadow-sm pointer-events-none transition-transform duration-500" />
+
+          {/* Main Card */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            onMouseMove={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              setSpotlightCoords({
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+              });
+            }}
+            onMouseEnter={() => setIsSpotlightHovered(true)}
+            onMouseLeave={() => setIsSpotlightHovered(false)}
+            className="relative w-full rounded-[2.5rem] bg-gradient-to-b from-white/95 via-slate-50/98 to-white/95 border border-indigo-100 backdrop-blur-xl p-8 sm:p-12 md:p-20 text-center shadow-[0_30px_70px_rgba(99,102,241,0.08)] overflow-hidden cursor-default z-10"
           >
-            Visit DSAstrology.com
-            <ArrowRight size={24} />
-          </motion.a>
+            {/* Spotlight Hover Glow Effect */}
+            {isSpotlightHovered && (
+              <div 
+                className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+                style={{
+                  background: `radial-gradient(450px circle at ${spotlightCoords.x}px ${spotlightCoords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`
+                }}
+              />
+            )}
+
+            {/* Rotating Sacred Geometry watermark INSIDE the card */}
+            <div className="absolute inset-0 opacity-[0.03] flex items-center justify-center pointer-events-none scale-90 animate-spin-slow">
+              <SacredGeometryBackground />
+            </div>
+
+            {/* Shooting Star 1 */}
+            <div className="absolute top-10 left-10 w-[80px] h-[1px] bg-gradient-to-r from-transparent via-indigo-300 to-transparent animate-shooting-star pointer-events-none" />
+            {/* Shooting Star 2 */}
+            <div className="absolute bottom-16 right-20 w-[100px] h-[1px] bg-gradient-to-r from-transparent via-blue-300 to-transparent animate-shooting-star-delayed pointer-events-none" />
+
+            {/* Sparkles icons floating around the text */}
+            <div className="absolute top-8 left-8 text-indigo-500/25 hidden md:block animate-float-slow">
+              <Sparkles size={28} />
+            </div>
+            <div className="absolute bottom-8 right-8 text-blue-500/25 hidden md:block animate-float-slow-delay">
+              <Sparkles size={28} />
+            </div>
+
+            <div className="relative z-10">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-wide text-slate-900 mb-6 font-[var(--font-cormorant)]">
+                Visit <span className="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 drop-shadow-sm">DS Astrology</span>
+              </h2>
+              <p className="text-slate-600 mb-10 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed font-normal font-[var(--font-space-grotesk)]">
+                Her full practice — bookings, course enrolments, content, and detailed horoscope readings — lives at dsastrology.com. Your cosmic journey starts there.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <motion.a 
+                  href={dsAstrologyUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  whileHover={{ 
+                    scale: 1.04,
+                    boxShadow: "0 12px 30px -5px rgba(79, 70, 229, 0.35), 0 8px 15px -6px rgba(79, 70, 229, 0.35)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4.5 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-bold font-[var(--font-space-grotesk)] text-base tracking-wide shadow-[0_4px_20px_rgba(79,70,229,0.25)] transition-all duration-300 cursor-pointer"
+                >
+                  Go to dsastrology.com ✦
+                </motion.a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
