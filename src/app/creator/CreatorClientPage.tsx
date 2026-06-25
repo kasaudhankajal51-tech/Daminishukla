@@ -166,9 +166,9 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
   ];
 
   const MOCK_INSTAGRAM = [
-    { id: "mockig1", mediaUrl: bannerUrl, mediaType: "VIDEO", caption: "Unlocking style & beauty secrets. Follow along for daily styling inspirations! ✨👗", views: "85K", timestamp: new Date().toISOString() },
-    { id: "mockig2", mediaUrl: bannerUrl, mediaType: "IMAGE", caption: "Authentic storytelling & lifestyle vlogging. Growing together as a family! 💖🌿", views: "64K", timestamp: new Date().toISOString() },
-    { id: "mockig3", mediaUrl: bannerUrl, mediaType: "VIDEO", caption: "Behind the scenes talk: How I navigate branding events. 🎥💫", views: "110K", timestamp: new Date().toISOString() }
+    { id: "mockig1", mediaUrl: bannerUrl, mediaType: "VIDEO", caption: "Unlocking style & beauty secrets. Follow along for daily styling inspirations! ✨👗", views: "85K", timestamp: new Date().toISOString(), permalink: "https://instagram.com" },
+    { id: "mockig2", mediaUrl: bannerUrl, mediaType: "IMAGE", caption: "Authentic storytelling & lifestyle vlogging. Growing together as a family! 💖🌿", views: "64K", timestamp: new Date().toISOString(), permalink: "https://instagram.com" },
+    { id: "mockig3", mediaUrl: bannerUrl, mediaType: "VIDEO", caption: "Behind the scenes talk: How I navigate branding events. 🎥💫", views: "110K", timestamp: new Date().toISOString(), permalink: "https://instagram.com" }
   ];
 
   return (
