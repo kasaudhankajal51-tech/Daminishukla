@@ -68,41 +68,43 @@ export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean 
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 sm:p-8 font-inter relative">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/10 blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-400/10 blur-[100px] pointer-events-none" />
+      <div className="min-h-screen flex items-center justify-center bg-[#060309] p-4 sm:p-8 font-inter relative overflow-hidden">
+        {/* Ambient glow effects */}
+        <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] rounded-full bg-[#FF4D2E]/10 blur-[130px] pointer-events-none" />
+        <div className="absolute bottom-[-20%] right-[-20%] w-[50%] h-[50%] rounded-full bg-[#9B7FEA]/15 blur-[130px] pointer-events-none" />
+        <div className="absolute top-[40%] right-[-10%] w-[30%] h-[30%] rounded-full bg-indigo-500/5 blur-[100px] pointer-events-none" />
         
-        <div className="w-full max-w-[1050px] bg-white rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col lg:flex-row min-h-[650px] relative z-10">
+        <div className="w-full max-w-[1050px] bg-[#0d0915]/60 border border-white/5 backdrop-blur-2xl rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col-reverse lg:flex-row min-h-[650px] relative z-10 animate-in fade-in zoom-in-95 duration-500">
           
           {/* Left Side: Form */}
-          <div className="w-full lg:w-1/2 p-8 md:p-14 lg:p-16 flex flex-col justify-center relative">
+          <div className="w-full lg:w-1/2 p-8 md:p-14 lg:p-16 flex flex-col justify-center relative bg-gradient-to-b from-[#120b1e]/20 to-[#090510]/40">
             
             {/* Header: Logo & Title */}
             <div className="flex items-center gap-4 mb-14">
-              <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-sm w-12 h-12 rounded-full">
-                <Settings className="text-blue-600" size={20} />
+              <div className="flex items-center justify-center bg-white/5 border border-[#9B7FEA]/20 shadow-[0_0_15px_rgba(155,127,234,0.1)] w-12 h-12 rounded-full">
+                <Settings className="text-[#9B7FEA]" size={20} />
               </div>
-              <div className="w-px h-6 bg-slate-200" />
-              <span className="text-blue-600 font-bold tracking-[0.2em] text-xs uppercase">Damini Admin</span>
+              <div className="w-px h-6 bg-white/10" />
+              <span className="text-[#9B7FEA] font-bold tracking-[0.2em] text-xs uppercase">Damini Admin</span>
             </div>
 
             {/* Title */}
             <div className="mb-12">
-              <h1 className="text-4xl lg:text-[2.5rem] font-bold font-outfit text-slate-900 mb-3 tracking-tight">Welcome back!</h1>
-              <p className="text-slate-500 font-medium text-[15px]">Securely sign in to manage your platform.</p>
+              <h1 className="text-4xl lg:text-[2.5rem] font-bold font-outfit text-white mb-3 tracking-tight">Welcome back!</h1>
+              <p className="text-white/50 font-medium text-[15px]">Securely sign in to manage your cosmic platform.</p>
             </div>
 
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[11px] font-bold text-slate-700 tracking-wider uppercase ml-1 block mb-1">Username</label>
+                <label className="text-[11px] font-bold text-slate-300 tracking-wider uppercase ml-1 block mb-1">Username</label>
                 <div className="relative flex items-center">
-                  <Mail className="absolute left-4 text-slate-400" size={18} />
+                  <Mail className="absolute left-4 text-purple-400/60" size={18} />
                   <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-white border-2 border-slate-200 rounded-2xl pl-12 pr-5 py-4 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium placeholder:text-slate-400"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-5 py-4 text-white focus:outline-none focus:border-[#9B7FEA] focus:ring-4 focus:ring-[#9B7FEA]/15 transition-all font-medium placeholder:text-white/20"
                     placeholder="Enter your username"
                     required
                   />
@@ -110,18 +112,18 @@ export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean 
               </div>
               
               <div className="space-y-2">
-                <label className="text-[11px] font-bold text-slate-700 tracking-wider uppercase ml-1 block mb-1">Password</label>
+                <label className="text-[11px] font-bold text-slate-300 tracking-wider uppercase ml-1 block mb-1">Password</label>
                 <div className="relative flex items-center">
-                  <Lock className="absolute left-4 text-slate-400" size={18} />
+                  <Lock className="absolute left-4 text-purple-400/60" size={18} />
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-white border-2 border-slate-200 rounded-2xl pl-12 pr-12 py-4 text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium placeholder:text-slate-400"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-12 py-4 text-white focus:outline-none focus:border-[#9B7FEA] focus:ring-4 focus:ring-[#9B7FEA]/15 transition-all font-medium placeholder:text-white/20"
                     placeholder="••••••••"
                     required
                   />
-                  <button type="button" className="absolute right-4 text-slate-400 hover:text-blue-500 transition-colors">
+                  <button type="button" className="absolute right-4 text-purple-400/60 hover:text-white transition-colors">
                     <Eye size={18} />
                   </button>
                 </div>
@@ -130,19 +132,19 @@ export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean 
                     type="button"
                     onClick={handleForgotPassword}
                     disabled={isForgotLoading}
-                    className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors disabled:opacity-50"
+                    className="text-xs font-semibold text-[#9B7FEA] hover:text-white transition-colors disabled:opacity-50"
                   >
                     {isForgotLoading ? "Sending..." : "Forgot Password?"}
                   </button>
                 </div>
               </div>
               
-              {loginError && <div className="text-red-600 text-sm font-semibold">{loginError}</div>}
-              {forgotMessage && <div className="text-blue-700 text-sm font-semibold">{forgotMessage}</div>}
+              {loginError && <div className="text-red-500 text-sm font-semibold">{loginError}</div>}
+              {forgotMessage && <div className="text-purple-300 text-sm font-semibold">{forgotMessage}</div>}
               
               <button
                 type="submit"
-                className="w-full py-4 mt-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-[17px] shadow-lg active:scale-[0.98] transition-all"
+                className="w-full py-4 mt-4 rounded-2xl bg-gradient-to-r from-[#FF4D2E] to-[#9B7FEA] hover:opacity-90 active:scale-[0.98] text-white font-bold text-[17px] shadow-[0_4px_25px_rgba(155,127,234,0.25)] transition-all cursor-pointer"
               >
                 Sign In
               </button>
@@ -150,28 +152,28 @@ export function AdminClient({ initialIsLoggedIn }: { initialIsLoggedIn: boolean 
           </div>
 
           {/* Right Side: Image */}
-          <div className="hidden lg:block lg:w-1/2 relative bg-slate-900">
+          <div className="w-full h-56 sm:h-64 lg:h-auto lg:w-1/2 relative bg-[#090510] shrink-0">
             <Image 
               src="/admin-hero.png" 
               alt="Creator and Astrology Dashboard Background" 
               fill 
-              className="object-cover"
+              className="object-cover opacity-80"
               priority
             />
             {/* Gradient overlay for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/10 to-black/80 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90 pointer-events-none" />
             
-            <div className="absolute top-12 left-12 right-12 text-white z-10">
-              <span className="text-cyan-400 font-bold tracking-[0.15em] text-sm uppercase mb-4 block">Damini Workspace</span>
-              <h2 className="text-4xl font-outfit font-bold leading-tight tracking-wide text-white drop-shadow-lg">
-                Manage creators,<br />astrology queries<br />& content
+            <div className="absolute top-6 left-6 right-6 lg:top-12 lg:left-12 lg:right-12 text-white z-10">
+              <span className="text-[#9B7FEA] font-bold tracking-[0.15em] text-[10px] sm:text-xs lg:text-sm uppercase mb-2 lg:mb-4 block">Damini Workspace</span>
+              <h2 className="text-xl sm:text-2xl lg:text-4xl font-outfit font-bold leading-tight tracking-wide text-white drop-shadow-[0_4px_15px_rgba(0,0,0,0.5)]">
+                Manage creators,<br className="hidden sm:inline" /> astrology queries<br className="hidden sm:inline" /> & content
               </h2>
             </div>
 
-            <div className="absolute bottom-10 left-12 z-10">
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md shadow-lg">
-                <Lock size={14} className="text-white" />
-                <span className="text-white text-sm font-bold tracking-wide">Authorized personnel only</span>
+            <div className="absolute bottom-4 left-6 lg:bottom-10 lg:left-12 z-10">
+              <div className="inline-flex items-center gap-2 lg:gap-3 px-4 py-2 lg:px-5 lg:py-2.5 rounded-full border border-white/10 bg-black/50 backdrop-blur-md shadow-lg">
+                <Lock size={12} className="text-[#9B7FEA]" />
+                <span className="text-white text-xs lg:text-sm font-bold tracking-wide">Authorized personnel only</span>
               </div>
             </div>
           </div>
