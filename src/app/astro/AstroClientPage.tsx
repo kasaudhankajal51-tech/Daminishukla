@@ -332,7 +332,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm break-words"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm break-words"
             >
               Damini Shukla
             </motion.h1>
@@ -408,7 +408,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
           >
             Cosmic Guidance
           </motion.div>
-          <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-4 text-slate-900">How Astrology Helps You</h2>
+          <h2 className="text-2xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">How Astrology Helps You</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-blue-500 mx-auto rounded-full" />
         </div>
         
@@ -456,7 +456,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
               <Sparkles size={12} className="animate-pulse text-amber-500" />
               Interactive Reading
             </motion.div>
-            <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-4 text-slate-900">Explore Your Astrological Sign</h2>
+            <h2 className="text-2xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">Explore Your Astrological Sign</h2>
             <p className="text-slate-600 max-w-lg mx-auto text-sm md:text-base">Click on your zodiac sign below to unlock its Vedic name, cosmic element energy, and spiritual guidance.</p>
             <div className="w-20 h-1 bg-gradient-to-r from-indigo-500 to-blue-500 mx-auto rounded-full mt-4" />
           </div>
@@ -564,7 +564,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
             >
               Premium Services
             </motion.div>
-            <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-4 text-slate-900">Vedic Consultations</h2>
+            <h2 className="text-2xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">Vedic Consultations</h2>
             <p className="text-indigo-600 font-medium text-lg">Authentic Vedic interpretations tailored to you.</p>
           </div>
 
@@ -631,7 +631,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-lg shadow-pink-500/30">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold font-outfit text-slate-900">Latest Astro Reels</h2>
+          <h2 className="text-2xl md:text-4xl font-bold font-outfit text-slate-900">Latest Astro Reels</h2>
         </div>
 
         {isLoadingInsta ? (
@@ -731,7 +731,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
         <SacredGeometryBackground />
         
         <div className="relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold font-outfit text-slate-900 mb-6">Ready to decode your destiny?</h2>
+          <h2 className="text-2xl md:text-4xl font-bold font-outfit text-slate-900 mb-6">Ready to decode your destiny?</h2>
           <p className="text-slate-600 mb-10 max-w-2xl mx-auto text-lg">Take the first step towards cosmic alignment and profound self-discovery.</p>
           <motion.a 
             href={dsAstrologyUrl} 

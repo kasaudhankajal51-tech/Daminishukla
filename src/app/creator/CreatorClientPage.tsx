@@ -247,7 +247,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm break-words"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold font-outfit mb-4 text-slate-900 drop-shadow-sm break-words"
             >
               Damini Shukla
             </motion.h1>
@@ -339,7 +339,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
           >
             Digital Milestones
           </motion.div>
-          <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-4 text-slate-900">Milestones & Impact</h2>
+          <h2 className="text-2xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">Milestones & Impact</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-sky-400 to-cyan-300 mx-auto rounded-full" />
         </div>
         
@@ -380,7 +380,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
               <Sparkles size={12} className="animate-pulse text-pink-400" />
               Content Pillars
             </motion.div>
-            <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-4 text-slate-900">Style & Lifestyle Pillars</h2>
+            <h2 className="text-2xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">Style & Lifestyle Pillars</h2>
             <p className="text-slate-600 max-w-lg mx-auto text-sm md:text-base">Tap on any pillar below to discover how Damini inspires and connects with her audience.</p>
             <div className="w-20 h-1 bg-gradient-to-r from-sky-400 to-cyan-300 mx-auto rounded-full mt-4" />
           </div>
@@ -474,7 +474,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
               <div className="inline-block px-4 py-1.5 rounded-full bg-sky-50 text-sky-600 font-semibold text-sm mb-6 border border-sky-100 shadow-sm">
                 As Seen on TV
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-6 text-slate-900">Bringing Digital Magic to Television</h2>
+              <h2 className="text-2xl md:text-4xl font-bold font-outfit mb-6 text-slate-900">Bringing Digital Magic to Television</h2>
               <p className="text-slate-600 text-lg mb-8 leading-relaxed">
                 From viral reels to national television screens, Damini has successfully bridged the gap between digital content and mainstream media, appearing in popular reality shows and talk panels.
               </p>
@@ -506,7 +506,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
       {/* Social Platform Cards */}
       <section className="max-w-5xl mx-auto px-4 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold font-outfit mb-3 text-slate-900">Connect & Explore</h2>
+          <h2 className="text-2xl md:text-3xl font-bold font-outfit mb-3 text-slate-900">Connect & Explore</h2>
           <p className="text-slate-600 mt-2 text-base">Join the community across platforms</p>
           <div className="w-20 h-1 bg-gradient-to-r from-sky-400 to-cyan-300 mx-auto rounded-full mt-5" />
         </div>
@@ -754,7 +754,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
             >
               Collaborations
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold font-outfit mb-4 text-slate-900">Work With Me</h2>
+            <h2 className="text-2xl md:text-3xl font-bold font-outfit mb-4 text-slate-900">Work With Me</h2>
             <p className="text-slate-500 text-sm sm:text-base font-medium">Fill out the form below for brand promotions, events, or collaborations.</p>
           </div>
 
