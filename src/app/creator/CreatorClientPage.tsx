@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Award, Users, Tv, Star, TrendingUp, Sparkles, Video, Play, Clock, Eye, Home, Heart } from "lucide-react";
+import { Mail, Award, Users, Tv, Star, TrendingUp, Sparkles, Video, Play, Clock, Eye, Home, Heart, User, Phone, Briefcase, MessageSquare, Send, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useCallback, memo, useEffect } from "react";
 import Image from "next/image";
@@ -741,118 +741,216 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
       </section>
 
       {/* Enquiry Form */}
-      <section id="enquiry-form" className="max-w-4xl mx-auto px-4 py-24">
-        <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-12 border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-sky-500 to-cyan-400" />
+      <section id="enquiry-form" className="max-w-4xl mx-auto px-4 py-16 md:py-20">
+        <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_15px_50px_rgba(0,0,0,0.04)] relative overflow-hidden grid grid-cols-1 lg:grid-cols-12">
           
-          <div className="text-center mb-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="inline-block px-3 py-1 rounded-full bg-sky-50 border border-sky-100 text-sky-600 text-xs font-bold uppercase tracking-wider mb-3"
-            >
-              Collaborations
-            </motion.div>
-            <h2 className="text-2xl md:text-3xl font-bold font-outfit mb-4 text-slate-900">Work With Me</h2>
-            <p className="text-slate-500 text-sm sm:text-base font-medium">Fill out the form below for brand promotions, events, or collaborations.</p>
+          {/* Left Column: Form Content */}
+          <div className="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between relative z-10">
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-sky-500 to-cyan-400" />
+            
+            <div>
+              <div className="mb-10 text-left">
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 border border-sky-100 text-sky-600 text-xs font-bold uppercase tracking-wider mb-4"
+                >
+                  <Sparkles size={12} className="text-orange-400 animate-pulse" />
+                  Collaborations
+                </motion.div>
+                <h2 className="text-3xl md:text-4xl font-bold font-outfit mb-3 text-slate-900 tracking-tight">Work With Me</h2>
+                <p className="text-slate-500 text-sm sm:text-base font-medium leading-relaxed">
+                  Fill out the form below for brand promotions, events, or collaborations. Let's connect!
+                </p>
+              </div>
+
+              {submitStatus === "success" ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-green-50/40 border border-green-100 text-green-800 p-8 rounded-2xl text-center shadow-sm flex flex-col items-center justify-center space-y-4 my-6"
+                >
+                  <div className="w-16 h-16 rounded-full bg-green-100 border border-green-200 flex items-center justify-center text-green-600">
+                    <CheckCircle2 size={32} className="animate-bounce" />
+                  </div>
+                  <h3 className="text-2xl font-bold font-outfit text-green-700">Message Sent Successfully!</h3>
+                  <p className="text-green-600 max-w-sm text-sm font-medium">
+                    Thank you for reaching out. Damini and her team will get back to you shortly.
+                  </p>
+                  <button 
+                    onClick={() => setSubmitStatus("idle")}
+                    className="mt-6 px-8 py-3 bg-white border border-green-200 text-green-700 font-semibold hover:bg-green-50 hover:shadow-sm active:scale-95 rounded-full transition-all cursor-pointer"
+                  >
+                    Send Another Message
+                  </button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-slate-700 ml-1 flex items-center gap-1.5">
+                        <User size={14} className="text-sky-500" />
+                        Full Name *
+                      </label>
+                      <input 
+                        required 
+                        type="text" 
+                        value={formData.fullName}
+                        onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                        className="w-full bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 focus:border-sky-400 focus:ring-4 focus:ring-sky-100/70 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none transition-all placeholder:text-slate-400 font-medium text-sm sm:text-base"
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-slate-700 ml-1 flex items-center gap-1.5">
+                        <Mail size={14} className="text-sky-500" />
+                        Email Address *
+                      </label>
+                      <input 
+                        required 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 focus:border-sky-400 focus:ring-4 focus:ring-sky-100/70 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none transition-all placeholder:text-slate-400 font-medium text-sm sm:text-base"
+                        placeholder="john@company.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-slate-700 ml-1 flex items-center gap-1.5">
+                        <Phone size={14} className="text-sky-500" />
+                        Phone Number
+                      </label>
+                      <input 
+                        type="tel" 
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        className="w-full bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 focus:border-sky-400 focus:ring-4 focus:ring-sky-100/70 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none transition-all placeholder:text-slate-400 font-medium text-sm sm:text-base"
+                        placeholder="+1 (555) 000-0000"
+                      />
+                    </div>
+                    <div className="space-y-2 relative">
+                      <label className="text-sm font-semibold text-slate-700 ml-1 flex items-center gap-1.5">
+                        <Briefcase size={14} className="text-sky-500" />
+                        Enquiry Type *
+                      </label>
+                      <div className="relative">
+                        <select 
+                          required
+                          value={formData.enquiryType}
+                          onChange={(e) => setFormData({...formData, enquiryType: e.target.value})}
+                          className="w-full bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 focus:border-sky-400 focus:ring-4 focus:ring-sky-100/70 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none transition-all font-medium appearance-none cursor-pointer text-sm sm:text-base pr-10"
+                        >
+                          <option value="Brand Promotion - Creator">Brand Promotion</option>
+                          <option value="Sponsored Reels - Creator">Sponsored Reels</option>
+                          <option value="YouTube Integration - Creator">YouTube Integration</option>
+                          <option value="Event / Show or TV - Creator">Event / Show or TV</option>
+                          <option value="Product Gifting - Creator">Product Gifting</option>
+                          <option value="Other - Creator">Other</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs">▼</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-700 ml-1 flex items-center gap-1.5">
+                      <MessageSquare size={14} className="text-sky-500" />
+                      Message *
+                    </label>
+                    <textarea 
+                      required 
+                      rows={5}
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      className="w-full bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 focus:border-sky-400 focus:ring-4 focus:ring-sky-100/70 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none transition-all resize-none placeholder:text-slate-400 font-medium text-sm sm:text-base"
+                      placeholder="Tell us about your project or brand..."
+                    ></textarea>
+                  </div>
+
+                  {submitStatus === "error" && (
+                    <div className="text-red-500 text-sm font-medium text-center bg-red-50 p-3 rounded-lg border border-red-100">
+                      Something went wrong. Please try again later.
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold text-lg shadow-[0_4px_15px_rgba(14,165,233,0.25)] hover:shadow-[0_6px_25px_rgba(14,165,233,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-[0_4px_15px_rgba(14,165,233,0.25)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Sending Message...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={18} />
+                        <span>Submit Enquiry</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
 
-          {submitStatus === "success" ? (
-            <div className="bg-green-50/50 border border-green-100 text-green-800 p-8 rounded-2xl text-center shadow-sm">
-              <h3 className="text-2xl font-bold mb-3 font-outfit text-green-700">Message Sent Successfully!</h3>
-              <p className="text-green-600">Thank you for reaching out. My team will get back to you shortly.</p>
-              <button 
-                onClick={() => setSubmitStatus("idle")}
-                className="mt-8 px-8 py-3 bg-white border border-green-200 text-green-700 font-semibold hover:bg-green-50 rounded-full transition-colors shadow-sm cursor-pointer"
-              >
-                Send Another Message
-              </button>
+          {/* Right Column: Creative Image Block */}
+          <div className="lg:col-span-5 relative min-h-[400px] lg:min-h-full overflow-hidden flex flex-col justify-end p-6 sm:p-8 text-white group/banner">
+            <div className="absolute inset-0 z-0">
+              <Image 
+                src={bannerUrl} 
+                alt="Work With Me" 
+                fill 
+                className="object-cover transition-transform duration-1000 ease-out group-hover/banner:scale-105"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent z-10" />
+              <div className="absolute inset-0 bg-sky-950/20 backdrop-blur-[1px] mix-blend-multiply z-10" />
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Full Name *</label>
-                  <input 
-                    required 
-                    type="text" 
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-100 focus:border-sky-400 transition-all placeholder:text-slate-400 font-medium text-sm sm:text-base"
-                    placeholder="John Doe"
-                  />
+
+            <div className="absolute top-6 left-6 z-20 flex flex-wrap gap-2">
+              <span className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                Open for Projects
+              </span>
+              <span className="px-3 py-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/10 text-orange-300 text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-md">
+                ✦ Creator
+              </span>
+            </div>
+
+            <div className="relative z-20 space-y-4">
+              <h3 className="text-2xl sm:text-3xl font-bold font-outfit text-white leading-tight drop-shadow-md">
+                Let's craft <br />
+                <span className="bg-gradient-to-r from-sky-400 via-pink-400 to-orange-300 bg-clip-text text-transparent font-extrabold">something magic</span> together.
+              </h3>
+              
+              <p className="text-slate-200/90 text-sm font-medium leading-relaxed drop-shadow-sm">
+                Combining authentic storytelling with brand aesthetics to create campaigns that truly resonate.
+              </p>
+
+              <div className="pt-4 border-t border-white/10 flex flex-col gap-2.5">
+                <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-100">
+                  <span className="p-1 rounded-md bg-white/10 border border-white/10 text-sky-300"><Users size={14} /></span>
+                  <span>2M+ Engaged Community</span>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Email Address *</label>
-                  <input 
-                    required 
-                    type="email" 
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-100 focus:border-sky-400 transition-all placeholder:text-slate-400 font-medium text-sm sm:text-base"
-                    placeholder="john@company.com"
-                  />
+                <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-100">
+                  <span className="p-1 rounded-md bg-white/10 border border-white/10 text-pink-300"><Star size={14} /></span>
+                  <span>Premium Brand Experience</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-sm font-semibold text-slate-100">
+                  <span className="p-1 rounded-md bg-white/10 border border-white/10 text-orange-300"><TrendingUp size={14} /></span>
+                  <span>Proven Viral Track Record</span>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Phone Number</label>
-                  <input 
-                    type="tel" 
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-100 focus:border-sky-400 transition-all placeholder:text-slate-400 font-medium text-sm sm:text-base"
-                    placeholder="+1 (555) 000-0000"
-                  />
-                </div>
-                <div className="space-y-2 relative">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">Enquiry Type *</label>
-                  <select 
-                    required
-                    value={formData.enquiryType}
-                    onChange={(e) => setFormData({...formData, enquiryType: e.target.value})}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-100 focus:border-sky-400 transition-all font-medium appearance-none cursor-pointer text-sm sm:text-base"
-                  >
-                    <option value="Brand Promotion - Creator">Brand Promotion</option>
-                    <option value="Sponsored Reels - Creator">Sponsored Reels</option>
-                    <option value="YouTube Integration - Creator">YouTube Integration</option>
-                    <option value="Event / Show or TV - Creator">Event / Show or TV</option>
-                    <option value="Product Gifting - Creator">Product Gifting</option>
-                    <option value="Other - Creator">Other</option>
-                  </select>
-                  <div className="absolute right-4 bottom-4 pointer-events-none text-slate-400 text-xs">▼</div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-slate-700 ml-1">Message *</label>
-                <textarea 
-                  required 
-                  rows={5}
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-100 focus:border-sky-400 transition-all resize-none placeholder:text-slate-400 font-medium text-sm sm:text-base"
-                  placeholder="Tell us about your project or brand..."
-                ></textarea>
-              </div>
-
-              {submitStatus === "error" && (
-                <div className="text-red-500 text-sm font-medium text-center bg-red-50 p-3 rounded-lg border border-red-100">
-                  Something went wrong. Please try again later.
-                </div>
-              )}
-
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold text-lg shadow-[0_4px_15px_rgba(14,165,233,0.25)] hover:shadow-[0_6px_25px_rgba(14,165,233,0.35)] hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none cursor-pointer"
-              >
-                {isSubmitting ? "Sending Message..." : "Submit Enquiry"}
-              </button>
-            </form>
-          )}
         </div>
       </section>
 
