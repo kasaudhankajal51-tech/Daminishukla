@@ -172,7 +172,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
   ];
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-sky-200 selection:text-sky-900 pb-20">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-sky-200 selection:text-sky-900">
 
       {/* GPU-Accelerated Smooth CSS Animations for Floating Particles */}
       <style jsx global>{`
@@ -855,6 +855,33 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
           )}
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="relative bg-sky-50/90 backdrop-blur-md text-slate-500 text-xs py-10 px-6 sm:px-12 border-t border-sky-200/50 font-sans tracking-wider select-none overflow-hidden group/footer">
+        
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left relative z-10">
+          <div className="font-medium">
+            © 2025 <span className="font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent font-outfit tracking-wide hover:opacity-80 transition-opacity cursor-pointer">Damini Shukla</span>
+          </div>
+          
+          <div className="flex items-center gap-2 font-semibold text-slate-700 lowercase group/text cursor-pointer">
+            <span>content creator</span>
+            <span className="text-orange-400 animate-pulse font-bold text-sm inline-block hover:scale-135 hover:rotate-180 transition-all duration-500">✦</span>
+            <span>influencer</span>
+          </div>
+          
+          <div className="lowercase">
+            <Link 
+              href="/" 
+              className="relative inline-flex items-center gap-1 hover:text-sky-600 transition-colors text-slate-500 font-semibold group/link pb-0.5"
+            >
+              <span>daminishukla.com</span>
+              <span className="text-[10px] text-orange-400 opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300">↗</span>
+              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gradient-to-r from-sky-500 to-orange-400 transition-all duration-300 group-hover/link:w-full" />
+            </Link>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );

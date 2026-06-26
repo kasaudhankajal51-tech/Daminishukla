@@ -5,7 +5,7 @@ import { Moon, Star, Sun, Compass, BookOpen, Heart, Briefcase, GraduationCap, Ar
 import Link from "next/link";
 import React, { useState, useEffect, memo } from "react";
 
-const ZODIAC_SIGNS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+const ZODIAC_SIGNS = ['\u2648\uFE0E', '\u2649\uFE0E', '\u264A\uFE0E', '\u264B\uFE0E', '\u264C\uFE0E', '\u264D\uFE0E', '\u264E\uFE0E', '\u264F\uFE0E', '\u2650\uFE0E', '\u2651\uFE0E', '\u2652\uFE0E', '\u2653\uFE0E'];
 
 // Precompute calculations for static SVGs once on module load to prevent hydration mismatches and performance cost on render
 const SACRED_GEOMETRY_LINES = Array.from({ length: 12 }).map((_, i) => {
@@ -149,6 +149,56 @@ interface Particle {
 
 export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { bannerUrl: string }) {
   const dsAstrologyUrl = "https://www.dsastrology.com/";
+  
+  const tarotIcon = (
+    <svg className="w-8 h-8 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="3" y="5" width="8" height="14" rx="1" transform="rotate(-5 7 12)" />
+      <rect x="11" y="5" width="8" height="14" rx="1" transform="rotate(5 15 12)" />
+      <circle cx="7" cy="12" r="2" />
+      <circle cx="15" cy="12" r="2" />
+    </svg>
+  );
+
+  const scrollIcon = (
+    <svg className="w-8 h-8 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M16.5 19.5c0 .83-.67 1.5-1.5 1.5H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11.5c.83 0 1.5.67 1.5 1.5v14z" />
+      <path d="M21 6V18c0 .83-.67 1.5-1.5 1.5H18" />
+      <path d="M18 4.5V19.5" />
+      <circle cx="10" cy="12" r="2" />
+      <line x1="10" y1="9" x2="10" y2="15" />
+      <line x1="7" y1="12" x2="13" y2="12" />
+    </svg>
+  );
+
+  const celestialWheelIcon = (
+    <svg className="w-8 h-8 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="2" />
+      <line x1="12" y1="3" x2="12" y2="21" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="5.6" y1="5.6" x2="18.4" y2="18.4" />
+      <line x1="5.6" y1="18.4" x2="18.4" y2="5.6" />
+    </svg>
+  );
+
+  const marqueeItems = [
+    <span key="aries" className="font-sans text-2xl text-current select-none">{"\u2648\uFE0E"}</span>,
+    <span key="taurus" className="font-sans text-2xl text-current select-none">{"\u2649\uFE0E"}</span>,
+    <span key="gemini" className="font-sans text-2xl text-current select-none">{"\u264A\uFE0E"}</span>,
+    <span key="tarot" className="inline-block">{tarotIcon}</span>,
+    <span key="cancer" className="font-sans text-2xl text-current select-none">{"\u264B\uFE0E"}</span>,
+    <span key="scroll" className="inline-block">{scrollIcon}</span>,
+    <span key="leo" className="font-sans text-2xl text-current select-none">{"\u264C\uFE0E"}</span>,
+    <span key="celestial" className="inline-block">{celestialWheelIcon}</span>,
+    <span key="virgo" className="font-sans text-2xl text-current select-none">{"\u264D\uFE0E"}</span>,
+    <span key="libra" className="font-sans text-2xl text-current select-none">{"\u264E\uFE0E"}</span>,
+    <span key="scorpio" className="font-sans text-2xl text-current select-none">{"\u264F\uFE0E"}</span>,
+    <span key="sagittarius" className="font-sans text-2xl text-current select-none">{"\u2650\uFE0E"}</span>,
+    <span key="capricorn" className="font-sans text-2xl text-current select-none">{"\u2651\uFE0E"}</span>,
+    <span key="aquarius" className="font-sans text-2xl text-current select-none">{"\u2652\uFE0E"}</span>,
+    <span key="pisces" className="font-sans text-2xl text-current select-none">{"\u2653\uFE0E"}</span>
+  ];
   const [mounted, setMounted] = useState(false);
   const [instagramPosts, setInstagramPosts] = useState<any[]>([]);
   const [isLoadingInsta, setIsLoadingInsta] = useState(true);
@@ -193,7 +243,7 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
   ];
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-indigo-200 selection:text-indigo-900 pb-20">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-800 font-inter selection:bg-indigo-200 selection:text-indigo-900">
       
       {/* GPU-Accelerated Smooth CSS Animations for Rotations and Particles */}
       <style jsx global>{`
@@ -255,6 +305,15 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
         .scrollbar-none {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          display: flex;
+          width: max-content;
+          animation: marquee 30s linear infinite;
         }
       `}</style>
 
@@ -855,6 +914,56 @@ export const AstroClientPage = memo(function AstroClientPage({ bannerUrl }: { ba
           </motion.div>
         </div>
       </section>
+
+      {/* Auto-Scrolling Zodiac Carousel */}
+      <section className="w-full bg-transparent py-8 overflow-hidden relative">
+
+        <div className="relative w-full overflow-hidden select-none z-10 text-purple-600">
+          <div className="flex w-max gap-16 items-center animate-marquee">
+            {/* Set 1 */}
+            {marqueeItems.map((item, index) => (
+              <div key={`marquee-1-${index}`} className="flex items-center justify-center text-3xl hover:scale-115 transition-all duration-300">
+                {item}
+              </div>
+            ))}
+            {/* Set 2 (Duplicate for seamless loop) */}
+            {marqueeItems.map((item, index) => (
+              <div key={`marquee-2-${index}`} className="flex items-center justify-center text-3xl hover:scale-115 transition-all duration-300">
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative bg-blue-50/90 backdrop-blur-md text-slate-500 text-xs py-10 px-6 sm:px-12 border-t border-blue-200/50 font-[var(--font-space-grotesk)] tracking-wider select-none overflow-hidden group/footer">
+        
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left relative z-10">
+          <div className="font-medium">
+            © 2025 <span className="font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent font-outfit tracking-wide hover:opacity-80 transition-opacity cursor-pointer">Damini Shukla</span>
+          </div>
+          
+          <div className="flex items-center gap-2 font-semibold text-slate-700 lowercase group/text cursor-pointer">
+            <span>vedic astrologer</span>
+            <span className="text-indigo-500 animate-pulse font-bold text-sm inline-block hover:scale-135 hover:rotate-180 transition-all duration-500">✦</span>
+            <span>astro teacher</span>
+          </div>
+          
+          <div className="lowercase">
+            <a 
+              href={dsAstrologyUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="relative inline-flex items-center gap-1 hover:text-indigo-600 transition-colors text-slate-500 font-semibold group/link pb-0.5"
+            >
+              <span>daminishukla.com</span>
+              <span className="text-[10px] text-indigo-400 opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300">↗</span>
+              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gradient-to-r from-indigo-500 to-[#D4A843] transition-all duration-300 group-hover/link:w-full" />
+            </a>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );
