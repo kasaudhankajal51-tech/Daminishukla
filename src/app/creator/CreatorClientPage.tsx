@@ -22,7 +22,6 @@ const PILLARS_DETAILS = [
   { key: 'beauty', label: 'Beauty & Glam', icon: '💄', bg: 'from-rose-500/10 to-pink-500/10 border-rose-500/20 text-rose-700', desc: 'Honest beauty product reviews, skincare routines, easy makeup guides, and glowing look transformations.', statement: '"Skincare is self-love. Beauty shines brightest when you feel beautiful from within."' }
 ];
 
-const PARTICLE_GLYPHS = ['✨', '📸', '✨', '🎥', '🌟'];
 
 // Precompute calculations for static SVGs once on module load to prevent hydration mismatches and performance cost on render
 const APERTURE_RAYS = Array.from({ length: 8 }).map((_, i) => {
@@ -59,12 +58,12 @@ const CreatorBackgroundPattern = memo(function CreatorBackgroundPattern() {
 });
 
 const SectionDivider = () => (
-  <div className="flex items-center justify-center gap-4 py-8 pointer-events-none opacity-20">
-    <div className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#FF4D2E]" />
-    <span className="text-[#FF9A2E] text-xs">✦</span>
-    <span className="text-[#FF9A2E] text-sm">✦</span>
-    <span className="text-[#FF9A2E] text-xs">✦</span>
-    <div className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#FF4D2E]" />
+  <div className="flex items-center justify-center gap-4 py-8 pointer-events-none opacity-80">
+    <div className="w-16 h-[1px] bg-gradient-to-r from-transparent to-[#B8321B]" />
+    <span className="text-[#B87B14] text-xs">✦</span>
+    <span className="text-[#B87B14] text-sm">✦</span>
+    <span className="text-[#B87B14] text-xs">✦</span>
+    <div className="w-16 h-[1px] bg-gradient-to-l from-transparent to-[#B8321B]" />
   </div>
 );
 
@@ -94,21 +93,10 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
   const [isLoadingInsta, setIsLoadingInsta] = useState(true);
 
   const [mounted, setMounted] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
   const [selectedPillar, setSelectedPillar] = useState<number>(0);
 
   useEffect(() => {
     setMounted(true);
-
-    // Generate floating particles on client mount to resolve hydration mismatches and prevent lag
-    const generated = Array.from({ length: 10 }).map((_, i) => ({
-      id: i,
-      left: `${5 + Math.random() * 85}%`,
-      delay: `${i * 1.5}s`,
-      duration: `${12 + Math.random() * 8}s`,
-      content: PARTICLE_GLYPHS[Math.floor(Math.random() * PARTICLE_GLYPHS.length)]
-    }));
-    setParticles(generated);
 
     const fetchVideos = async () => {
       try {
@@ -137,6 +125,15 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
     fetchVideos();
     fetchInsta();
   }, []);
+
+  // Auto-slide Content Pillars like a carousel (changes every 5 seconds)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSelectedPillar((prev) => (prev + 1) % PILLARS_DETAILS.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [selectedPillar]);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,20 +171,8 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-[#0A0503] text-stone-200 font-inter selection:bg-[#FF4D2E]/20 selection:text-[#FF9A2E]">
 
-      {/* GPU-Accelerated Smooth CSS Animations for Floating Particles */}
+      {/* Scrollbar utilities */}
       <style jsx global>{`
-        @keyframes float-up {
-          0% { transform: translateY(105vh) scale(0.8) rotate(0deg); opacity: 0; }
-          10% { opacity: 0.4; }
-          90% { opacity: 0.4; }
-          100% { transform: translateY(-15vh) scale(1.1) rotate(360deg); opacity: 0; }
-        }
-        .animate-float-particle {
-          animation: float-up var(--float-duration) linear infinite;
-          animation-delay: var(--float-delay);
-          left: var(--float-left);
-          will-change: transform, opacity;
-        }
         .scrollbar-none::-webkit-scrollbar {
           display: none;
         }
@@ -219,24 +204,6 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0503] via-[#0A0503]/85 to-black/50" />
         
-        {/* Decorative Floating Particles (Client-only) */}
-        {mounted && particles.length > 0 && (
-          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-            {particles.map((p) => (
-              <div
-                key={p.id}
-                style={{
-                  "--float-left": p.left,
-                  "--float-delay": p.delay,
-                  "--float-duration": p.duration,
-                } as React.CSSProperties}
-                className="absolute text-orange-450/35 text-3xl opacity-0 drop-shadow-[0_0_10px_rgba(255,154,46,0.4)] animate-float-particle"
-              >
-                {p.content}
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* Hero Content Container */}
         <div className="relative z-10 w-full px-4 max-w-4xl mx-auto">
@@ -346,7 +313,7 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
           <div className="w-24 h-1 bg-gradient-to-r from-[#FF4D2E] to-[#FF9A2E] mx-auto rounded-full" />
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
           {MILESTONES_AND_IMPACT.map((item, i) => (
             <motion.div 
               key={i}
@@ -354,13 +321,13 @@ export const CreatorClientPage = memo(function CreatorClientPage({ bannerUrl }: 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="bg-[#120B09]/45 p-8 rounded-3xl border border-white/5 hover:border-[#FF4D2E]/50 hover:shadow-[0_20px_40px_rgba(255,77,46,0.08)] hover:-translate-y-1.5 transition-all duration-300 shadow-[0_15px_35px_rgba(0,0,0,0.3)] group"
+              className="bg-[#120B09]/45 p-8 rounded-3xl border border-[#FF4D2E]/40 hover:border-[#FF9A2E] hover:bg-[#1C100C]/70 hover:shadow-[0_20px_45px_rgba(255,77,46,0.12),0_0_20px_rgba(255,154,46,0.06)] hover:-translate-y-2 hover:scale-[1.01] transition-all duration-300 shadow-[0_15px_35px_rgba(0,0,0,0.3)] group cursor-pointer"
             >
-              <div className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-[#FF9A2E] mb-6 group-hover:scale-110 group-hover:bg-[#FF4D2E]/20 group-hover:text-white transition-all duration-300">
+              <div className="w-14 h-14 rounded-full bg-[#FF4D2E]/15 border border-white/5 flex items-center justify-center text-[#FF9A2E] mb-6 group-hover:scale-110 group-hover:rotate-12 group-hover:bg-[#FF4D2E]/35 group-hover:text-white transition-all duration-300">
                 {item.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3 font-outfit text-white group-hover:text-[#FF9A2E] transition-colors duration-300">{item.title}</h3>
-              <p className="text-stone-400 leading-relaxed text-sm group-hover:text-stone-300 transition-colors duration-300">{item.desc}</p>
+              <h3 className="text-xl font-bold mb-3 font-outfit text-[#FF9A2E] group-hover:text-white transition-colors duration-300">{item.title}</h3>
+              <p className="text-stone-455 group-hover:text-stone-200 leading-relaxed text-sm transition-colors duration-300">{item.desc}</p>
             </motion.div>
           ))}
         </div>
